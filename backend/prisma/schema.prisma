@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int        @id @default(autoincrement())
+  email       String     @unique
+  password    String
+  name        String
+  streak      Int        @default(0)
+  lastStudyAt DateTime?
+  createdAt   DateTime   @default(now())
+  decks       Deck[]
+  progress    Progress[]
+}
+
+model Deck {
+  id       Int     @id @default(autoincrement())
+  title    String
+  topic    String?
+  isPublic Boolean @default(false)
+  owner    User?   @relation(fields: [ownerId], references: [id])
+  ownerId  Int?
+  words    Word[]
+}
+
+model Word {
+  id       Int        @id @default(autoincrement())
+  term     String
+  meaning  String
+  phonetic String?
+  example  String?
+  deck     Deck       @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  deckId   Int
+  progress Progress[]
+}
+
+model Progress {
+  id           Int       @id @default(autoincrement())
+  user         User      @relation(fields: [userId], references: [id])
+  userId       Int
+  word         Word      @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  wordId       Int
+  level        Int       @default(0)
+  isFavorite   Boolean   @default(false)
+  nextReviewAt DateTime?
+
+  @@unique([userId, wordId])
+}
