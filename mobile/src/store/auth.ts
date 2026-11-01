@@ -10,10 +10,11 @@ interface AuthState {
   ready: boolean;
   hydrate: () => Promise<void>;
   setSession: (token: string, user: User) => Promise<void>;
+  patchUser: (patch: Partial<User>) => Promise<void>;
   logout: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
   user: null,
   ready: false,
@@ -34,6 +35,16 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ token, user });
     try {
       await SecureStore.setItemAsync(KEY, JSON.stringify({ token, user }));
+    } catch {}
+  },
+
+  patchUser: async (patch) => {
+    const { token, user } = get();
+    if (!token || !user) return;
+    const next = { ...user, ...patch };
+    set({ user: next });
+    try {
+      await SecureStore.setItemAsync(KEY, JSON.stringify({ token, user: next }));
     } catch {}
   },
 

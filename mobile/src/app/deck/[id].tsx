@@ -45,6 +45,13 @@ export default function DeckDetailScreen() {
               onPress={() => router.push({ pathname: '/study', params: { deckId: String(deckId) } } as never)}
             />
 
+            <PrimaryButton
+              title="📝 Làm quiz"
+              variant="outline"
+              disabled={data.words.length === 0}
+              onPress={() => router.push({ pathname: '/quiz', params: { deckId: String(deckId) } } as never)}
+            />
+
             <FlatList
               data={data.words}
               keyExtractor={(w) => String(w.id)}
