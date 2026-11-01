@@ -7,48 +7,136 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum PartOfSpeech {
+  NOUN
+  VERB
+  ADJECTIVE
+  ADVERB
+  PREPOSITION
+  CONJUNCTION
+  PRONOUN
+  INTERJECTION
+  PHRASE
+  OTHER
+}
+
+enum ChatRole {
+  USER
+  ASSISTANT
+}
+
 model User {
-  id          Int        @id @default(autoincrement())
-  email       String     @unique
-  password    String
-  name        String
-  streak      Int        @default(0)
-  lastStudyAt DateTime?
-  createdAt   DateTime   @default(now())
-  decks       Deck[]
-  progress    Progress[]
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
+  password      String
+  name          String
+  avatar        String?
+  dailyGoal     Int           @default(10)
+  streak        Int           @default(0)
+  longestStreak Int           @default(0)
+  lastStudyAt   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  decks         Deck[]
+  progress      Progress[]
+  quizAttempts  QuizAttempt[]
+  studyLogs     StudyLog[]
+  chatMessages  ChatMessage[]
 }
 
 model Deck {
-  id       Int     @id @default(autoincrement())
-  title    String
-  topic    String?
-  isPublic Boolean @default(false)
-  owner    User?   @relation(fields: [ownerId], references: [id])
-  ownerId  Int?
-  words    Word[]
+  id           Int           @id @default(autoincrement())
+  title        String
+  description  String?
+  topic        String?
+  emoji        String?
+  difficulty   Difficulty    @default(BEGINNER)
+  isPublic     Boolean       @default(false)
+  owner        User?         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId      Int?
+  words        Word[]
+  quizAttempts QuizAttempt[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([ownerId])
+  @@index([topic])
 }
 
 model Word {
-  id       Int        @id @default(autoincrement())
-  term     String
-  meaning  String
-  phonetic String?
-  example  String?
-  deck     Deck       @relation(fields: [deckId], references: [id], onDelete: Cascade)
-  deckId   Int
-  progress Progress[]
+  id             Int          @id @default(autoincrement())
+  term           String
+  meaning        String
+  phonetic       String?
+  partOfSpeech   PartOfSpeech @default(OTHER)
+  example        String?
+  exampleMeaning String?
+  imageUrl       String?
+  deck           Deck         @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  deckId         Int
+  progress       Progress[]
+  createdAt      DateTime     @default(now())
+
+  @@index([deckId])
 }
 
 model Progress {
-  id           Int       @id @default(autoincrement())
-  user         User      @relation(fields: [userId], references: [id])
-  userId       Int
-  word         Word      @relation(fields: [wordId], references: [id], onDelete: Cascade)
-  wordId       Int
-  level        Int       @default(0)
-  isFavorite   Boolean   @default(false)
-  nextReviewAt DateTime?
+  id             Int       @id @default(autoincrement())
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int
+  word           Word      @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  wordId         Int
+  level          Int       @default(0)
+  correctCount   Int       @default(0)
+  wrongCount     Int       @default(0)
+  isFavorite     Boolean   @default(false)
+  lastReviewedAt DateTime?
+  nextReviewAt   DateTime?
 
   @@unique([userId, wordId])
+  @@index([userId, nextReviewAt])
+  @@index([userId, isFavorite])
+}
+
+model QuizAttempt {
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int
+  deck           Deck     @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  deckId         Int
+  totalQuestions Int
+  correctAnswers Int
+  durationSec    Int      @default(0)
+  createdAt      DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+model StudyLog {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  date         DateTime @db.Date
+  wordsLearned Int      @default(0)
+  wordsReview  Int      @default(0)
+  minutes      Int      @default(0)
+
+  @@unique([userId, date])
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  role      ChatRole
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
