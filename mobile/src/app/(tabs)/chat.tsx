@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
-import { FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput } from 'react-native';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
+import { Alert, FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { aiApi } from '../../api/ai';
 import { errorMessage } from '../../api/client';
@@ -10,15 +10,41 @@ import { colors } from '../../theme/colors';
 
 interface Msg { id: number; role: 'user' | 'ai'; text: string }
 
+const GREETING: Msg = {
+  id: 0,
+  role: 'ai',
+  text: 'Chào bạn! Mình là **Wordie**, gia sư tiếng Anh của bạn. Hỏi mình bất cứ điều gì nhé 😊',
+};
 const SUGGEST = ['Phân biệt make và do', 'Cách dùng thì hiện tại hoàn thành', 'Cho mình 5 từ về du lịch'];
 
 export default function Chat() {
-  const [msgs, setMsgs] = useState<Msg[]>([
-    { id: 0, role: 'ai', text: 'Chào bạn! Mình là **Wordie**, gia sư tiếng Anh của bạn. Hỏi mình bất cứ điều gì nhé 😊' },
-  ]);
+  const [msgs, setMsgs] = useState<Msg[]>([GREETING]);
   const [input, setInput] = useState('');
   const listRef = useRef<FlatList<Msg>>(null);
   const nextId = useRef(1);
+  const loaded = useRef(false);
+
+  const hist = useQuery({
+    queryKey: ['chat', 'history'],
+    queryFn: aiApi.history,
+    staleTime: Infinity,
+    gcTime: 0,
+  });
+
+  useEffect(() => {
+    if (!hist.data || loaded.current) return;
+    loaded.current = true;
+    const rows: Msg[] = hist.data.map((r) => ({
+      id: nextId.current++,
+      role: r.role === 'USER' ? 'user' : 'ai',
+      text: r.content,
+    }));
+    setMsgs([GREETING, ...rows]);
+  }, [hist.data]);
+
+  function push(role: Msg['role'], text: string) {
+    setMsgs((l) => [...l, { id: nextId.current++, role, text }]);
+  }
 
   const chat = useMutation({
     mutationFn: (m: string) => aiApi.chat(m),
@@ -26,8 +52,17 @@ export default function Chat() {
     onError: (e) => push('ai', '⚠️ ' + errorMessage(e)),
   });
 
-  function push(role: Msg['role'], text: string) {
-    setMsgs((l) => [...l, { id: nextId.current++, role, text }]);
+  const clear = useMutation({
+    mutationFn: aiApi.clear,
+    onSuccess: () => setMsgs([GREETING]),
+    onError: (e) => Alert.alert('Lỗi', errorMessage(e)),
+  });
+
+  function confirmClear() {
+    Alert.alert('Xóa hội thoại?', 'Wordie sẽ quên toàn bộ cuộc trò chuyện.', [
+      { text: 'Hủy', style: 'cancel' },
+      { text: 'Xóa', style: 'destructive', onPress: () => clear.mutate() },
+    ]);
   }
 
   function send(text?: string) {
@@ -41,10 +76,17 @@ export default function Chat() {
   return (
     <Screen>
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <YStack paddingHorizontal={20} paddingTop={14} paddingBottom={8}>
-          <Text fontSize={24} fontWeight="800" color={colors.text}>🤖 Wordie</Text>
-          <Text fontSize={13} color={colors.muted}>Gia sư tiếng Anh AI</Text>
-        </YStack>
+        <XStack paddingHorizontal={20} paddingTop={14} paddingBottom={8} justifyContent="space-between" alignItems="center">
+          <YStack>
+            <Text fontSize={24} fontWeight="800" color={colors.text}>🤖 Wordie</Text>
+            <Text fontSize={13} color={colors.muted}>Gia sư tiếng Anh AI</Text>
+          </YStack>
+          {msgs.length > 1 ? (
+            <Pressable onPress={confirmClear} hitSlop={10}>
+              <Text color={colors.danger} fontWeight="700">🗑 Xóa</Text>
+            </Pressable>
+          ) : null}
+        </XStack>
 
         <FlatList
           ref={listRef}
@@ -59,14 +101,9 @@ export default function Chat() {
             const mine = item.role === 'user';
             return (
               <XStack justifyContent={mine ? 'flex-end' : 'flex-start'}>
-                <YStack
-                  maxWidth="85%"
-                  padding={12}
-                  borderRadius={16}
+                <YStack maxWidth="85%" padding={12} borderRadius={16}
                   backgroundColor={mine ? colors.primary : colors.card}
-                  borderWidth={mine ? 0 : 1}
-                  borderColor={colors.border}
-                >
+                  borderWidth={mine ? 0 : 1} borderColor={colors.border}>
                   <RichText text={item.text} color={mine ? '#fff' : colors.text} />
                 </YStack>
               </XStack>
@@ -93,8 +130,6 @@ export default function Chat() {
             onChangeText={setInput}
             placeholder="Nhập câu hỏi..."
             placeholderTextColor={colors.muted}
-            onSubmitEditing={() => send()}
-            returnKeyType="send"
             multiline
             style={{
               flex: 1, maxHeight: 100, minHeight: 44, borderRadius: 22, paddingHorizontal: 16,
