@@ -31,6 +31,7 @@ export default function Decks() {
         </XStack>
 
         <Field label="" value={search} onChangeText={setSearch} placeholder="🔍 Tìm bộ từ..." />
+        <PrimaryButton title="＋ Tạo bộ thủ công" variant="outline" onPress={() => router.push('/deck/new' as never)} />
         <PrimaryButton title="🤖 Tạo bộ từ bằng AI" variant="outline" onPress={() => setOpen(true)} />
 
         {isLoading ? (
