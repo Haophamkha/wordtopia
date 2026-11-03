@@ -11,6 +11,7 @@ import { StudyModule } from './study/study.module';
 import { QuizModule } from './quiz/quiz.module';
 import { StatsModule } from './stats/stats.module';
 import { AiModule } from './ai/ai.module';
+import { PathModule } from './path/path.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AiModule } from './ai/ai.module';
     QuizModule,
     StatsModule,
     AiModule,
+    PathModule,
   ],
   controllers: [AppController],
   providers: [AppService],

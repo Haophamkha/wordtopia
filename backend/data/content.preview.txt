@@ -1,0 +1,306 @@
+
+=== BEGINNER ===
+
+# Unit 1: Daily Life 1 (Cuộc sống hằng ngày) 🏠
+  Lesson 1: have=có | only=chỉ | own=của riêng, tự làm | one=một | name=tên
+  Lesson 2: line=hàng, lối | bank=ngân hàng | wall=bức tường | floor=sàn nhà | piece=miếng, mảnh
+  Lesson 3: corner=góc | table=cái bàn | party=bữa tiệc | garden=vườn | wear=mặc, đeo
+  Lesson 4: room=phòng | building=tòa nhà | bar=quán bar, thanh | box=cái hộp | music=âm nhạc
+
+# Unit 2: Daily Life 2 (Cuộc sống hằng ngày) 🏠
+  Lesson 1: clock=đồng hồ treo tường | painting=bức tranh | guest=khách | noise=tiếng ồn | chair=cái ghế
+  Lesson 2: stage=sân khấu | movie=phim | spend=dành (thời gian), tiêu (tiền) | conversation=cuộc trò chuyện | cat=con mèo
+  Lesson 3: fan=quạt | bath=tắm bồn | yard=sân | drum=cái trống | wash=giặt, rửa
+  Lesson 4: birthday=ngày sinh nhật | key=chìa khóa | smoke=khói, hút thuốc | lot=nhiều
+
+# Unit 3: Food & Drink (Ăn uống) 🍜
+  Lesson 1: order=gọi món, thứ tự | glass=cốc thủy tinh | water=nước | cook=nấu ăn | ice=đá
+  Lesson 2: fish=con cá | rice=cơm, gạo | food=thức ăn | orange=quả cam | milk=sữa
+  Lesson 3: tea=trà | egg=trứng | meat=thịt | fruit=trái cây | sweet=ngọt
+  Lesson 4: coffee=cà phê | restaurant=nhà hàng | bread=bánh mì | sugar=đường | cheese=phô mai
+  Lesson 5: bowl=cái bát, tô | corn=bắp, ngô | chicken=con gà, thịt gà | dish=món ăn, cái đĩa
+  Lesson 6: turkey=gà tây | meal=bữa ăn | beef=thịt bò | juice=nước ép trái cây
+
+# Unit 4: Body & Health (Cơ thể & sức khỏe) 🩺
+  Lesson 1: hand=bàn tay | head=đầu | face=khuôn mặt | strong=khỏe mạnh | eye=mắt | hospital=bệnh viện
+  Lesson 2: body=cơ thể | heart=trái tim | arm=cánh tay | leg=chân | medicine=thuốc | shoulder=vai
+  Lesson 3: hair=tóc | neck=cổ | self=bản thân | knee=đầu gối | fat=béo, mập
+  Lesson 4: ear=tai | nurse=y tá | brush=chải, cái bàn chải | bone=xương | mouth=miệng
+
+# Unit 5: Time & Numbers (Thời gian & số) ⏰
+  Lesson 1: time=thời gian | day=ngày | before=trước | end=kết thúc | week=tuần
+  Lesson 2: month=tháng | year=năm | today=hôm nay | once=một lần | still=vẫn
+  Lesson 3: spring=mùa xuân | hour=giờ | already=đã... rồi | late=muộn | soon=sớm
+  Lesson 4: usually=thường xuyên | date=ngày tháng | quarter=một phần tư | always=luôn luôn | nine=số chín
+  Lesson 5: eight=số tám | again=lại, một lần nữa | second=thứ hai, giây | thirty=số ba mươi | due=đến hạn, đến kỳ
+
+# Unit 6: Describing Things 1 (Miêu tả) 🎨
+  Lesson 1: other=khác | same=giống nhau | long=dài | new=mới | great=tuyệt vời, lớn
+  Lesson 2: side=bên, mặt | small=nhỏ | high=cao | first=đầu tiên | special=đặc biệt
+  Lesson 3: front=phía trước | many=nhiều | red=màu đỏ | heavy=nặng | best=tốt nhất
+  Lesson 4: white=màu trắng | black=màu đen | blue=màu xanh dương | real=thật | short=ngắn
+  Lesson 5: green=màu xanh lá | hot=nóng | spot=đốm, vết | middle=ở giữa | full=đầy
+  Lesson 6: dark=tối | almost=hầu như | big=lớn | bright=sáng sủa | fast=nhanh
+
+# Unit 7: Describing Things 2 (Miêu tả) 🎨
+  Lesson 1: broken=bị hỏng, vỡ | old=cũ, già | bottom=đáy, phần dưới | slow=chậm | hard=khó, cứng
+  Lesson 2: different=khác nhau | yellow=màu vàng | large=lớn, rộng | true=đúng, thật | dry=khô
+  Lesson 3: personal=cá nhân | much=nhiều | thin=mỏng, gầy | correct=đúng | important=quan trọng
+  Lesson 4: tall=cao | clean=sạch sẽ | brown=màu nâu | thick=dày | tight=chật
+  Lesson 5: excellent=xuất sắc | pink=màu hồng | gray=màu xám | easy=dễ dàng | difficult=khó khăn
+  Lesson 6: successful=thành công | color=màu sắc | interesting=thú vị | free=miễn phí, rảnh rỗi | smart=thông minh
+
+# Unit 8: School & Study 1 (Trường học) 🎓
+  Lesson 1: number=số | book=sách | story=câu chuyện | write=viết | question=câu hỏi
+  Lesson 2: paper=giấy | word=từ | letter=lá thư | teacher=giáo viên | rule=quy tắc
+  Lesson 3: subject=môn học | picture= bức tranh, bức ảnh | ten=số mười | school=trường học | form=mẫu đơn, hình thức
+  Lesson 4: five=số năm | speech=bài phát biểu | board=bảng | circle=hình tròn | student=học sinh, sinh viên
+  Lesson 5: course=khóa học | six=sáu | sum=tổng | note=tờ ghi chú
+
+# Unit 9: School & Study 2 (Trường học) 🎓
+  Lesson 1: art=nghệ thuật | pen=cái bút | test=kiểm tra | section=phần | grade=điểm số
+  Lesson 2: program=chương trình | language=ngôn ngữ | repeat=lặp lại | sentence=câu | result=kết quả
+  Lesson 3: practice=luyện tập | character=nhân vật | science=khoa học | bell=cái chuông | answer=câu trả lời, trả lời
+  Lesson 4: row=hàng, dãy | library=thư viện | learn=học | fairy=tiên, nàng tiên
+  Lesson 5: read=đọc | solve=giải quyết | period=giai đoạn, tiết học | teach=dạy học
+
+# Unit 10: Common Actions 1 (Hành động thường gặp) 🏃
+  Lesson 1: open=mở | start=bắt đầu | change=thay đổi | become=trở thành | together=cùng nhau
+  Lesson 2: cover=che phủ | begin=bắt đầu | close=đóng | meet=gặp | action=hành động
+  Lesson 3: finish=hoàn thành | find=tìm thấy | do=làm | carry=mang, vác | turn=quay, rẽ
+  Lesson 4: quickly=một cách nhanh chóng | fill=làm đầy | move=di chuyển | celebrate=kỷ niệm, ăn mừng | feed=cho ăn
+
+# Unit 11: Common Actions 2 (Hành động thường gặp) 🏃
+  Lesson 1: build=xây dựng | save=cứu, tiết kiệm | need=cần | join=tham gia | paint=sơn
+  Lesson 2: touch=chạm | dance=khiêu vũ | introduce=giới thiệu | collect=sưu tầm | walk=đi bộ
+  Lesson 3: describe=miêu tả | fly=bay | keep=giữ | bring=mang lại, cầm theo | call=gọi
+  Lesson 4: see=nhìn thấy | try=thử, cố gắng | climb=trèo, leo | watch=xem, đồng hồ đeo tay | stand=đứng
+
+# Unit 12: Nature & Weather 1 (Thiên nhiên & thời tiết) 🌿
+  Lesson 1: world=thế giới | light=ánh sáng, đèn | fire=lửa | sun=mặt trời | farm=nông trại
+  Lesson 2: sky=bầu trời | tree=cây | stone=hòn đá | rain=mưa | wind=gió
+  Lesson 3: snow=tuyết | sea=biển | animal=động vật | field=cánh đồng | winter=mùa đông
+  Lesson 4: star=ngôi sao | bear=con gấu | cold=lạnh | flower=bông hoa
+
+# Unit 13: Nature & Weather 2 (Thiên nhiên & thời tiết) 🌿
+  Lesson 1: weather=thời tiết | rose=hoa hồng | warm=ấm áp | hole=cái lỗ | dog=con chó
+  Lesson 2: mountain=núi | moon=mặt trăng | grow=trồng, lớn lên | grass=cỏ | leaf=lá cây
+  Lesson 3: bird=con chim | autumn=mùa thu | cool=mát mẻ | sunshine=ánh nắng mặt trời | mouse=con chuột
+  Lesson 4: sunny=có nắng | sheep=con cừu | hill=ngọn đồi | summer=mùa hè
+
+# Unit 14: Shopping & Money (Mua sắm & tiền bạc) 🛍️
+  Lesson 1: pay=trả tiền | gold=vàng | pair=cặp, đôi | sell=bán | dollar=đô la
+  Lesson 2: pocket=túi áo, túi quần | money=tiền | cloth=vải | toy=đồ chơi
+  Lesson 3: cap=mũ lưỡi trai | buy=mua | expensive=đắt đỏ | collection=bộ sưu tập
+
+# Unit 15: Travel & Places (Du lịch & địa điểm) ✈️
+  Lesson 1: place=nơi chốn | trip=chuyến đi | arrive=đến | camp=cắm trại | seat=chỗ ngồi
+  Lesson 2: foreign=nước ngoài | city=thành phố | beach=bãi biển | hotel=khách sạn | visit=thăm, ghé thăm
+  Lesson 3: island=hòn đảo | ticket=vé | park=công viên | holiday=ngày lễ, kỳ nghỉ
+
+# Unit 16: Transport (Giao thông) 🚌
+  Lesson 1: car=xe hơi | street=đường phố | train=xe lửa | bus=xe buýt | way=con đường, cách | block=khối, dãy nhà
+  Lesson 2: left=bên trái | truck=xe tải | bridge=cái cầu | boat=con thuyền | bicycle=xe đạp | ship=tàu thủy
+
+# Unit 17: Work & Jobs (Công việc) 💼
+  Lesson 1: work=làm việc | office=văn phòng | business=kinh doanh | meeting=cuộc họp | plan=kế hoạch | job=công việc
+  Lesson 2: owner=chủ sở hữu | driver=tài xế | partner=đối tác, bạn đồng hành | factory=nhà máy | worker=công nhân
+  Lesson 3: interview=phỏng vấn | discuss=thảo luận | farmer=nông dân | officer=sĩ quan, cảnh sát | reporter=phóng viên
+
+# Unit 18: Society & Culture (Xã hội & văn hóa) 🌏
+  Lesson 1: life=cuộc sống | case=trường hợp | people=người, con người | person=người | peace=hòa bình
+  Lesson 2: fair=công bằng | famous=nổi tiếng | celebration=lễ kỷ niệm | pop=nhạc pop | group=nhóm
+  Lesson 3: leader=lãnh đạo | flag=lá cờ | vote=bỏ phiếu | everyone=mọi người | culture=văn hóa
+
+# Unit 19: Ideas & Thinking (Ý tưởng & suy nghĩ) 💡
+  Lesson 1: point=điểm | memory=ký ức, trí nhớ | problem=vấn đề | reason=lý do | difference=sự khác biệt
+  Lesson 2: sin=tội lỗi | four=bốn | seven=số bảy | twenty=hai mươi | idea=ý tưởng
+
+# Unit 20: More Words (Từ vựng bổ sung) 📚
+  Lesson 1: family=gia đình | child=đứa trẻ | young=trẻ | age=tuổi | care=chăm sóc, quan tâm
+  Lesson 2: interested=quan tâm, hứng thú | dream=giấc mơ | fun=vui vẻ | love=yêu | exciting=thú vị, hào hứng
+  Lesson 3: play=chơi | run=chạy | ball=quả bóng | fishing=câu cá | game=trò chơi
+  Lesson 4: pool=hồ bơi | machine=máy móc | camera=máy ảnh | computer=máy tính | message=tin nhắn
+
+=== INTERMEDIATE ===
+
+# Unit 1: Daily Life (Cuộc sống hằng ngày) 🏠
+  Lesson 1: live=sống | flat=căn hộ, bằng phẳng | opening=sự khai mạc, lễ mở màn | secret=bí mật | neighborhood=vùng lân cận, khu phố
+  Lesson 2: arrangement=sự sắp xếp | invitation=lời mời | basement=tầng hầm | lighter=cái bật lửa, nhẹ hơn | powder=bột
+  Lesson 3: hammer=cái búa | ladder=cái thang | waste=lãng phí, rác thải | pipe=ống dẫn (nước, khí)
+
+# Unit 2: Work & Jobs (Công việc) 💼
+  Lesson 1: superior=cấp trên, vượt trội | responsible=có trách nhiệm | mission=sứ mệnh, nhiệm vụ | duty=nhiệm vụ, bổn phận | behalf=sự thay mặt, nhân danh
+  Lesson 2: profession=nghề nghiệp | formal=trang trọng | department=phòng ban, khoa | proceed=tiếp tục, tiến hành | conduct=thực hiện, hạnh kiểm
+  Lesson 3: proposal=đề xuất, lời cầu hôn | inform=thông báo | command=ra lệnh, mệnh lệnh | signature=chữ ký | leading=dẫn đầu, hàng đầu
+  Lesson 4: distribution=sự phân phối | assistance=sự hỗ trợ | supply=cung cấp, nguồn cung | fund=quỹ, tài trợ | chief=lãnh đạo, chính, chủ yếu
+
+# Unit 3: Travel & Places (Du lịch & địa điểm) ✈️
+  Lesson 1: distance=khoảng cách | arrival=sự đến nơi | mile=dặm (đơn vị đo khoảng cách) | shelter=nơi trú ẩn | paradise=thiên đường
+  Lesson 2: exit=lối ra, thoát | trail=đường mòn | port=cảng | border=biên giới | entry=lối vào, sự ghi vào
+  Lesson 3: locate=xác định vị trí | nearby=gần bên | departure=sự khởi hành | attraction=sự thu hút, điểm thu hút
+
+# Unit 4: Shopping & Money (Mua sắm & tiền bạc) 🛍️
+  Lesson 1: charge=phí, sạc, buộc tội | worth=đáng giá | goods=hàng hóa | deliver=giao hàng, phân phát | pound=cân Anh, đồng bảng Anh
+  Lesson 2: rubber=cao su | service=dịch vụ | barrel=thùng phuy | expense=chi phí | collar=cổ áo
+  Lesson 3: cotton=bông, vải cotton | dozen=một tá (12) | silk=lụa | guarantee=bảo hành, đảm bảo
+
+# Unit 5: Feelings & Personality (Cảm xúc & tính cách) 😊
+  Lesson 1: spirit=tinh thần, tâm hồn | soul=tâm hồn, linh hồn | engaged=đính hôn, bận rộn | desire=mong muốn, khát khao | humor=sự hài hước
+  Lesson 2: passion=niềm đam mê | concerned=lo lắng, quan tâm | impression=ấn tượng | personally=cá nhân tôi, về phần tôi | silent=yên lặng, im lặng
+  Lesson 3: loyal=trung thành | satisfied=hài lòng | charm=sức hút, duyên dáng | terror=sự khủng bố, sự kinh hãi | loyalty=sự trung thành
+  Lesson 4: curious=tò mò | tragic=bi thảm | generous=hào phóng | confusion=sự bối rối, hỗn loạn | faithful=chung thủy, trung thành
+  Lesson 5: anger=sự tức giận | patient=kiên nhẫn, bệnh nhân | excitement=sự hào hứng, phấn khích | aware=nhận thức, ý thức
+
+# Unit 6: Body & Health (Cơ thể & sức khỏe) 🩺
+  Lesson 1: foot=bàn chân | operation=ca phẫu thuật, sự vận hành | joint=chung, khớp xương | hearing=thính giác, phiên tòa | rest=nghỉ ngơi, phần còn lại | hip=hông
+  Lesson 2: stretch=kéo giãn, duỗi | palm=lòng bàn tay | recover=hồi phục, bình phục | suicide=tự sát | blind=mù, rèm cửa | cure=chữa khỏi, thuốc
+  Lesson 3: cell=tế bào, phòng giam | deadly=chết người, chí mạng | finger=ngón tay | surgeon=bác sĩ phẫu thuật | wound=vết thương
+  Lesson 4: surgery=phẫu thuật | hunger=sự đói khát | injury=chấn thương | clinic=phòng khám | vision=tầm nhìn, thị lực
+
+# Unit 7: School & Study (Trường học) 🎓
+  Lesson 1: grant=tiền trợ cấp, ban cho | attend=tham dự | level=mức độ, cấp độ | tale=câu chuyện | failure=sự thất bại
+  Lesson 2: finding=kết quả nghiên cứu, phát hiện | reward=phần thưởng | lecture=bài thuyết trình, bài giảng | assignment=bài tập, nhiệm vụ | announcement=thông báo
+  Lesson 3: discovery=sự khám phá | examination=kỳ thi, cuộc kiểm tra | formula=công thức | laboratory=phòng thí nghiệm | theory=lý thuyết
+  Lesson 4: lab=phòng thí nghiệm | philosophy=triết học | dialogue=cuộc đối thoại | instructor=người hướng dẫn, giảng viên | graduate=tốt nghiệp
+  Lesson 5: progress=sự tiến bộ | professor=giáo sư | experiment=thí nghiệm | marker=bút dạ, bút lông
+  Lesson 6: term=học kỳ, thuật ngữ | introduction=sự giới thiệu, phần mở đầu | phrase=cụm từ | observation=sự quan sát
+
+# Unit 8: Nature & Weather (Thiên nhiên & thời tiết) 🌿
+  Lesson 1: land=đất, hạ cánh | pure=nguyên chất, tinh khiết | rare=hiếm | hunt=săn bắn, tìm kiếm | sand=cát | ocean=đại dương
+  Lesson 2: steam=hơi nước | stream=dòng suối, phát trực tuyến | universe=vũ trụ | dirt=bụi bẩn, đất | lightning=chớp, tia chớp
+  Lesson 3: darkness=bóng tối | pit=cái hố | destruction=sự phá hủy | sunset= hoàng hôn | pole=cái cột, cực (trái đất)
+  Lesson 4: horizon=đường chân trời | atmosphere=bầu không khí | mud=bùn | tide=thủy triều | cage=cái lồng
+  Lesson 5: fuel=chất đốt, nhiên liệu | surface=bề mặt | cave=hang động | pond=cái ao | surround=vây quanh, bao quanh
+
+# Unit 9: Society & Culture 1 (Xã hội & văn hóa) 🌏
+  Lesson 1: bound=chắc chắn, có ràng buộc | authority=quyền lực, nhà chức trách | involved=liên quan, dính líu | respect=tôn trọng | justice=công lý, công bằng
+  Lesson 2: defense=sự phòng thủ, quốc phòng | responsibility=trách nhiệm | reputation=danh tiếng | public=công cộng | claim=tuyên bố, đòi hỏi
+  Lesson 3: charity=từ thiện | disaster=thảm họa | incident=sự cố, ụ việc | investigation=cuộc điều tra | agreement=thỏa thuận, hiệp định
+  Lesson 4: prayer=lời cầu nguyện | politics=chính trị | violence=bạo lực | customs=Phong tục, hải quan | victim=nạn nhân
+  Lesson 5: aid=sự viện trợ, hỗ trợ | funeral=tang lễ | protect=bảo vệ | religion=tôn giáo
+  Lesson 6: mutual=lẫn nhau, qua lại | permit=cho phép, giấy phép | chaos=sự hỗn loạn | ceremony=lễ, nghi lễ
+
+# Unit 10: Society & Culture 2 (Xã hội & văn hóa) 🌏
+  Lesson 1: identity=định tính, danh tính | demonstration=sự biểu tình, cuộc biểu diễn | theft=sự trộm cắp | judgment=sự phán đoán, phán quyết | tragedy=bi kịch | legally=hợp pháp
+  Lesson 2: neutral=trung lập | contribution=sự đóng góp | threat=mối đe dọa | organization=tổ chức | boom=sự bùng nổ | construction=sự xây dựng
+  Lesson 3: sex=giới tính | declare=tuyên bố | steel=thép | property=tài sản, bất động sản | legal=hợp pháp
+  Lesson 4: crisis=khủng hoảng | judge=thẩm phán, đánh giá | approval=sự chấp thuận | protection=sự bảo vệ | gay=đồng tính nam
+  Lesson 5: security=an ninh, sự bảo mật | weapon=vũ khí | humanity=nhân loại | democracy=nền dân chủ | unite=đoàn kết, hợp nhất
+
+# Unit 11: Technology & Media (Công nghệ & truyền thông) 💻
+  Lesson 1: iron=sắt, bàn là | switch=công tắc, chuyển đổi | wire=dây điện, dây kẽm | record=ghi âm, hồ sơ | robot=người máy | connection=sự kết nối
+  Lesson 2: setting=bối cảnh, cài đặt | flash=lóe sáng, đèn flash | electronic=điện tử | mechanical=thuộc về cơ khí, máy móc | equipment=thiết bị, dụng cụ | network=mạng lưới
+
+# Unit 12: Common Actions 1 (Hành động thường gặp) 🏃
+  Lesson 1: fall=rơi, ngã | reach=đạt tới, với tới | lead=dẫn dắt, dẫn đến | cut=cắt | push=đẩy
+  Lesson 2: lift=nhấc lên, thang máy | rescue=giải cứu | rise=tăng lên, mọc lên | press=ấn, báo chí | defend=bảo vệ, phòng thủ
+  Lesson 3: drag=kéo lê | capture=bắt giữ, chụp lại | praise=ca ngợi, khen ngợi | strip=cởi đồ, dải (đất, giấy) | appeal=thu hút, kháng cáo
+  Lesson 4: chase=đuổi theo | count=đếm | trace=dấu vết, lần theo | treat=đối xử, điều trị, thết đãi
+
+# Unit 13: Common Actions 2 (Hành động thường gặp) 🏃
+  Lesson 1: twist=vặn, xoắn | hit=đánh, đấm | lay=đặt, để | hop=nhảy lò cò | resist=chống lại, kháng cự
+  Lesson 2: obtain=đạt được, lấy được | aside=sang một bên | slip=trượt, trượt chân | pick=chọn, hái | closely=chặt chẽ, sát sao
+  Lesson 3: fold=gấp lại | collapse=sụp đổ | struggle=đấu tranh, vật lộn | recognize=nhận ra | scratch=vết trầy xước, cào
+  Lesson 4: bow=cúi đầu | commit=cam kết, phạm (tội) | remove=di chuyển đi, tháo ra | crush=ghiền nát, đè bẹp
+
+# Unit 14: Describing Things 1 (Miêu tả) 🎨
+  Lesson 1: entire=toàn bộ | able=có khả năng | sharp=sắc bén | general=chung, tổng quát | completely=hoàn toàn | entirely=hoàn toàn
+  Lesson 2: exact=chính xác | ordinary=bình thường | plain=đơn giản, đồng bằng | solid=rắn, chắc chắn | extraordinary=phi thường, đặc biệt | hidden=bị ẩn giấu
+  Lesson 3: edge=cạnh, rìa | broad=rộng | capable=có năng lực, có khả năng | giant=khổng lồ | fake=giả mạo
+  Lesson 4: unable=không thể | serious=nghiêm túc, nghiêm trọng | main=chính, chủ yếu | worn=mòn, cũ rách | permanent=vĩnh viễn, lâu dài
+
+# Unit 15: Describing Things 2 (Miêu tả) 🎨
+  Lesson 1: rough=gồ ghề, thô ráp | temporary=tạm thời | top=đỉnh, phần trên cùng | outer=bên ngoài | bold=dũng cảm, đậm | tiny=nhỏ xíu, tí hon
+  Lesson 2: directly=trực tiếp | mere=chỉ là, thuần túy | contrary=trái lại, tương phản | typical=tiêu biểu, điển hình | bare=trần trụi, trọc | narrow=hẹp
+  Lesson 3: maximum=tối đa | stable=ổn định | precious=quý giá | model=mô hình, người mẫu | pattern=mẫu, kiểu
+  Lesson 4: total=tổng cộng | partial=một phần | highly=rất, cao | reasonable=hợp lý | steady=vững chắc, ổn định
+
+# Unit 16: Describing Things 3 (Miêu tả) 🎨
+  Lesson 1: merely=chỉ là, đơn thuần | distant=xa xôi | intense=mãnh liệt, dữ dội | slightly=hơi hơi, một chút | crystal=pha lê, tinh thể | impressive=ấn tượng
+  Lesson 2: specially=đặc biệt là, riêng cho | remarkable=đáng chú ý | purely=hoàn toàn, thuần túy | limited=hạn chế | threshold=ngưỡng cửa, ngưỡng | internal=bên trong, nội bộ
+  Lesson 3: alternative=sự thay thế, thay thế | threatening=mang tính đe dọa | magical=ma thuật, kỳ diệu | medium=trung bình, phương tiện | length=chiều dài
+  Lesson 4: extreme=vô cùng, khắc nghiệt | complicated=phức tạp | incredible=tuyệt vời, khó tin | worthy=xứng đáng | active=năng động, tích cực
+
+# Unit 17: Ideas & Thinking (Ý tưởng & suy nghĩ) 💡
+  Lesson 1: otherwise=nếu không thì | proof=bằng chứng | holy=thánh thiện, thiêng liêng | decision=quyết định | equal=bằng nhau
+  Lesson 2: assume=cho rằng, giả định | presence=sự hiện diện | intention=ý định, mục đích | sacred=thần thánh, thiêng liêng | infinite=vô tận, vô hạn
+  Lesson 3: glory=vinh quang | limit=giới hạn | possibility=khả năng | reality=thực tế | loss=sự mất mát, tổn thất
+  Lesson 4: possession=sự sở hữu, tài sản | absence=sự vắng mặt | divine=thuộc về thần thánh | separation=sự chia cắt, ly thân | associate=liên tưởng, kết giao
+  Lesson 5: eternal=vĩnh cửu, bất灭 | basis=cơ sở, nền tảng | aim=mục đích, nhắm vào | foundation=nền tảng, tổ chức từ thiện
+  Lesson 6: logic=lô-gích, lý luận | combination=sự kết hợp | existence=sự tồn tại | capacity=sức chứa, năng lực
+
+# Unit 18: Time & Numbers (Thời gian & số) ⏰
+  Lesson 1: last=cuối cùng | past=quá khứ | present=hiện tại, món quà | immediately=ngay lập tức | half=một nửa | sometimes=thỉnh thoảng
+  Lesson 2: occasion=dịp, cơ hội | future=tương lai | meanwhile=trong khi đó | overnight=qua đêm | immediate=ngay lập tức | current=hiện tại, dòng điện
+  Lesson 3: permanently=vĩnh viễn | annual=hàng năm | rarely=hiếm khi | previous=trước đó | occasional=thỉnh thoảng
+
+# Unit 19: More Words (Từ vựng bổ sung) 📚
+  Lesson 1: frozen=đóng băng | taste=nếm, vị giác | pot=cái nồi, chậu | feast=tiệc lớn | bitter=đắng | lamb=thịt cừu con, cừu non
+  Lesson 2: engine=động cơ | crash=tai nạn xe, đâm sầm | tank=thùng chứa, xe tăng | motor=động cơ | transport=giao thông vận tải | score=điểm số
+  Lesson 3: triumph=chiến thắng vang dội | race=cuộc đua | diving=lặn | marriage=hôn nhân | companion=bạn đồng hành
+  Lesson 4: relationship=mối quan hệ | relative=họ hàng, người thân | relation=mối quan hệ | pregnant=mang thai | bond=mối liên kết, gắn bó
+
+=== ADVANCED ===
+
+# Unit 1: Ideas & Thinking (Ý tưởng & suy nghĩ) 💡
+  Lesson 1: state=trạng thái, tiểu bang | cause=nguyên nhân | shield=khiên, sự bảo vệ | bearing=sự chịu đựng, phương hướng | breakdown=sự hỏng hóc, sự suy sụp
+  Lesson 2: reaction=phản ứng | proposition=lời đề nghị, mệnh đề | evil=cái ác, độc ác | intent=ý định | dignity=phẩm giá
+  Lesson 3: virtue=đức hạnh | creation=sự sáng tạo | projection=sự dự báo, hình chiếu | fate=vận mệnh, định mệnh
+
+# Unit 2: Society & Culture 1 (Xã hội & văn hóa) 🌏
+  Lesson 1: trial=phiên tòa, thử nghiệm | criminal=tội phạm | identification=sự nhận dạng, chứng minh thư | worship=thờ cúng, tôn sùng | execution=sự thi hành, tử hình | exception=ngoại lệ
+  Lesson 2: investigate=điều tra | volunteer=tình nguyện viên | welfare=phúc lợi | assault=sự tấn công | legend=truyền thuyết
+  Lesson 3: cooperation=sự hợp tác | domestic=trong nước, nội địa | fraud=gian lận, lừa đảo | federal=thuộc liên bang | moral=đạo đức
+
+# Unit 3: Society & Culture 2 (Xã hội & văn hóa) 🌏
+  Lesson 1: surveillance=sự giám sát | revolution=cuộc cách mạng | community=cộng đồng | abuse=sự lạm dụng | testimony=lời khai | privilege=đặc quyền
+  Lesson 2: ritual=lễ nghi, nghi thức | institution=trụ sở, tổ chức | collector=người sưu tầm | legitimate=hợp pháp | masterpiece=kiệt tác
+  Lesson 3: dispute=tranh chấp | parade=cuộc diễu hành | explosive=chất nổ, dễ nổ | pension=tiền lương hưu | standard=tiêu chuẩn
+
+# Unit 4: Work & Jobs (Công việc) 💼
+  Lesson 1: master=bậc thầy, chủ nhân | advance=sự tiến bộ, thăng tiến | profit=lợi nhuận | seal=con dấu, bị kín | stake=cọc, cổ phần
+  Lesson 2: scheme=kế hoạch, hệ thống | transfer=chuyển giao | gross=tổng, thô | bid=trả giá, đấu thầu | conference=hội nghị
+  Lesson 3: operator=người điều hành, nhân viên trực tổng đài | project=dự án | venture=dự án kinh doanh rủi ro | correspondence=thư từ, sự trao đổi thư tín | colleague=đồng nghiệp
+  Lesson 4: partnership=mối quan hệ đối tác | messenger=người đưa tin | expert=chuyên gia | shift=sự thay đổi, ca làm việc | extension=sự mở rộng, gia hạn
+
+# Unit 5: Feelings & Personality (Cảm xúc & tính cách) 😊
+  Lesson 1: trust=tin tưởng | faith=niềm tin, lòng tin | relief=sự nhẹ nhõm | suffering=sự đau khổ | determined=kiên quyết, quyết tâm
+  Lesson 2: friendly=thân thiện | intimate=thân mật | keen=sắc sảo, say sưa | devoted=tận tụy, tận tâm | grief=nỗi buồn sâu sắc, nỗi đau khổ
+  Lesson 3: impressed=bị ấn tượng | ease=sự dễ dàng, làm dịu | regard=sự quan tâm, coi trọng | willing=sẵn lòng | convinced=tin chắc, thuyết phục
+
+# Unit 6: Nature & Weather (Thiên nhiên & thời tiết) 🌿
+  Lesson 1: hunting=sự săn bắn | beam=chùm tia, rầm nhà | tail=đuôi | acid=axit | flame=ngọn lửa
+  Lesson 2: wolf=con sói | blast=vụ nổ, tiếng nổ lớn | pine=cây thông | rainbow=cầu vồng
+  Lesson 3: fox=con cáo | copper=đồng (kim loại) | pearl=ngọc trai | deer=con hươu
+
+# Unit 7: Describing Things (Miêu tả) 🎨
+  Lesson 1: deep=sâu | identical=giống hệt nhau | modest=khiêm tốn | prime=hàng đầu, chính | strictly=một cách nghiêm ngặt
+  Lesson 2: slight=nhẹ, nhỏ | particular=cụ thể, riêng biệt | invisible=vô hình | packed=chật ních, đông đúc | noble=cao quý
+  Lesson 3: underneath=bên dưới | actual=thực tế | concerning=về, liên quan đến | grand=hoành tráng, lớn lao | genuine=chân thật, chính hãng
+  Lesson 4: odd=kỳ lạ, lẻ | striking=nổi bật, gây ấn tượng | growing=đang phát triển, lớn lên | swift=nhanh chóng | universal=chung, phổ quát
+  Lesson 5: hollow=rỗng | mature=trưởng thành | fierce=dữ dội, quyết liệt | somewhat=hơi, phần nào | precisely=chính xác
+  Lesson 6: crack=vết nứt | concrete=bê tông, cụ thể | related=có liên quan | cooperative=có tính hợp tác
+
+# Unit 8: Common Actions (Hành động thường gặp) 🏃
+  Lesson 1: make=làm, tạo ra | motion=sự chuyển động | jump=nhảy | swing=đánh đu, xích đu | retreat=rút lui | reverse=đảo ngược, lùi lại
+  Lesson 2: bend=uốn cong | lower=hạ thấp | snap=bẻ gãy, chụp ảnh nhanh | separately=riêng biệt | exhibit=trưng bày | pursuit=sự theo đuổi
+  Lesson 3: deliberately=cố tình | grip=cầm nắm chặt | leap=nhảy vọt | fulfill=hoàn thành, đáp ứng | ram=đâm mạnh, đụng xe
+
+# Unit 9: Shopping & Money (Mua sắm & tiền bạc) 🛍️
+  Lesson 1: counter=quầy hàng, quầy thu ngân | saving=sự tiết kiệm | withdraw=rút lui, rút tiền | hook=cái móc | blade=lưỡi dao
+  Lesson 2: hood=mũ trùm đầu | ton=tấn | costume=trang phục | loan=khoản vay | booth=gian hàng, chuồng nhỏ
+
+# Unit 10: Travel & Places (Du lịch & địa điểm) ✈️
+  Lesson 1: far=xa | means=phương tiện, cách thức | crew=đội ngũ, phi hành đoàn | landing=sự hạ cánh | deck=boong tàu
+  Lesson 2: lobby=sảnh đợi | overseas=ở nước ngoài | dock=bến tàu | cottage=nhà tranh, nhà nhỏ ở nông thôn
+
+# Unit 11: More Words (Từ vựng bổ sung) 📚
+  Lesson 1: chip=mảnh vỡ, vi mạch | transmission=sự truyền tải | circuit=mạch điện | biotechnology=công nghệ sinh học | rocket=tên lửa | physician=bác sĩ đa khoa
+  Lesson 2: pulse=mạch, nhịp đập | fatal=chí mạng, gây tử vong | sexual=giới tính, tình dục | stroke=đột quỵ | injured=bị thương
+  Lesson 3: discipline=kỷ luật | psychology=tâm lý học | theme=chủ đề | intellectual=thuộc trí tuệ, trí thức | reference=sự tham khảo
+  Lesson 4: translation=sự dịch thuật | underground=ngầm, dưới lòng đất | toll=phí cầu đường, tổn thất | mix=trộn, pha trộn | tender=mềm
+  Lesson 5: grain=ngũ cốc, hạt | olive=quả ô liu | wheat=lúa mì | pitch=sân (thể thao) | win=thắng
+  Lesson 6: shooting=sự bắn súng, quay phim | penalty=hình phạt, quả phạt đền | divorce=ly hôn | sound=âm thanh | outside=bên ngoài
+  Lesson 7: inside=bên trong | mask=mặt nạ | residence=nơi cư trú, nhà ở | recommendation=sự giới thiệu, gợi ý | ceiling=trần nhà
+  Lesson 8: lifetime=cả đời, đời người | dawn=bình minh | timing=thời điểm, sự chọn thời gian | temporarily=tạm thời | phase=giai đoạn

@@ -26,13 +26,18 @@ export default function Decks() {
   return (
     <Screen>
       <YStack padding={20} gap={14} flex={1}>
-        <XStack justifyContent="space-between" alignItems="center">
-          <Text fontSize={26} fontWeight="800" color={colors.text}>Bộ từ vựng</Text>
-        </XStack>
+        <Text fontSize={26} fontWeight="800" color={colors.text}>Bộ từ vựng</Text>
 
-        <Field label="" value={search} onChangeText={setSearch} placeholder="🔍 Tìm bộ từ..." />
-        <PrimaryButton title="＋ Tạo bộ thủ công" variant="outline" onPress={() => router.push('/deck/new' as never)} />
-        <PrimaryButton title="🤖 Tạo bộ từ bằng AI" variant="outline" onPress={() => setOpen(true)} />
+        <Field icon="search" value={search} onChangeText={setSearch} placeholder="Tìm bộ từ..." />
+
+        <XStack gap={10}>
+          <YStack flex={1}>
+            <PrimaryButton title="Tạo bằng AI" icon="sparkles" onPress={() => setOpen(true)} />
+          </YStack>
+          <YStack flex={1}>
+            <PrimaryButton title="Thủ công" icon="add" variant="outline" onPress={() => router.push('/deck/new' as never)} />
+          </YStack>
+        </XStack>
 
         {isLoading ? (
           <ActivityIndicator color={colors.primary} style={{ marginTop: 30 }} />
@@ -45,7 +50,7 @@ export default function Decks() {
           <FlatList
             data={data}
             keyExtractor={(d) => String(d.id)}
-            contentContainerStyle={{ gap: 10, paddingBottom: 20 }}
+            contentContainerStyle={{ gap: 12, paddingBottom: 20, paddingTop: 4 }}
             refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={() => refetch()} tintColor={colors.primary} />}
             ListEmptyComponent={<Text color={colors.muted} textAlign="center" marginTop={30}>Chưa có bộ từ nào</Text>}
             renderItem={({ item }) => (

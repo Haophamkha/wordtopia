@@ -6,4 +6,6 @@ export const authApi = {
     api.post<AuthResponse>('/auth/login', { email, password }).then((r) => r.data),
   register: (name: string, email: string, password: string) =>
     api.post<AuthResponse>('/auth/register', { name, email, password }).then((r) => r.data),
+  google: (idToken: string) =>
+    api.post<AuthResponse>('/auth/google', { idToken }).then((r) => r.data),
 };

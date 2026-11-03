@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import * as Speech from 'expo-speech';
+import { speak } from '../utils/speak';
 import { ActivityIndicator, FlatList, Pressable } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { errorMessage } from '../api/client';
@@ -42,7 +42,7 @@ export default function Favorites() {
                   </Text>
                   <Text fontSize={14} color={colors.muted}>{item.meaning}</Text>
                 </YStack>
-                <Pressable onPress={() => Speech.speak(item.term, { language: 'en-US' })} hitSlop={8}>
+                <Pressable onPress={() => speak(item.term)} hitSlop={8}>
                   <Text fontSize={20}>🔊</Text>
                 </Pressable>
                 <Pressable onPress={() => unfav.mutate(item.id)} hitSlop={8}>

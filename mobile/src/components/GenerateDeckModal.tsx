@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Pressable, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Pressable } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { errorMessage } from '../api/client';
 import { useGenerateDeck } from '../hooks/useDecks';
@@ -46,7 +46,7 @@ export function GenerateDeckModal({ visible, onClose, onDone }: {
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
-      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'flex-end' }}>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'flex-end' }}>
         <YStack backgroundColor="#fff" borderTopLeftRadius={24} borderTopRightRadius={24} padding={20} gap={16}>
           <XStack justifyContent="space-between" alignItems="center">
             <Text fontSize={20} fontWeight="800" color={colors.text}>🤖 Tạo bộ từ bằng AI</Text>
@@ -74,7 +74,7 @@ export function GenerateDeckModal({ visible, onClose, onDone }: {
 
           <PrimaryButton title="Tạo bộ từ" onPress={submit} loading={gen.isPending} />
         </YStack>
-      </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }

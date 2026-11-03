@@ -1,6 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, FlatList, KeyboardAvoidingView, Platform, Pressable, TextInput } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, Pressable, TextInput } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { aiApi } from '../../api/ai';
 import { errorMessage } from '../../api/client';
@@ -15,7 +17,20 @@ const GREETING: Msg = {
   role: 'ai',
   text: 'Chào bạn! Mình là **Wordie**, gia sư tiếng Anh của bạn. Hỏi mình bất cứ điều gì nhé 😊',
 };
-const SUGGEST = ['Phân biệt make và do', 'Cách dùng thì hiện tại hoàn thành', 'Cho mình 5 từ về du lịch'];
+
+const SUGGEST: { icon: keyof typeof Ionicons.glyphMap; text: string }[] = [
+  { icon: 'swap-horizontal', text: 'Phân biệt make và do' },
+  { icon: 'time-outline', text: 'Cách dùng thì hiện tại hoàn thành' },
+  { icon: 'airplane-outline', text: 'Cho mình 5 từ vựng về du lịch' },
+];
+
+function AiBadge({ size = 30 }: { size?: number }) {
+  return (
+    <YStack width={size} height={size} borderRadius={size / 2} backgroundColor="#EFEBFF" alignItems="center" justifyContent="center">
+      <Ionicons name="sparkles" size={size * 0.55} color={colors.primary} />
+    </YStack>
+  );
+}
 
 export default function Chat() {
   const [msgs, setMsgs] = useState<Msg[]>([GREETING]);
@@ -73,17 +88,30 @@ export default function Chat() {
     chat.mutate(m);
   }
 
+  const canSend = !!input.trim() && !chat.isPending;
+
   return (
     <Screen>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <XStack paddingHorizontal={20} paddingTop={14} paddingBottom={8} justifyContent="space-between" alignItems="center">
-          <YStack>
-            <Text fontSize={24} fontWeight="800" color={colors.text}>🤖 Wordie</Text>
-            <Text fontSize={13} color={colors.muted}>Gia sư tiếng Anh AI</Text>
+      <YStack flex={1}>
+        <XStack paddingHorizontal={20} paddingTop={14} paddingBottom={12} alignItems="center" gap={12}
+          borderBottomWidth={1} borderBottomColor={colors.border} backgroundColor="#fff">
+          <AiBadge size={46} />
+          <YStack flex={1}>
+            <Text fontSize={22} fontWeight="800" color={colors.text}>Gia sư AI</Text>
+            <XStack alignItems="center" gap={6}>
+              <YStack width={8} height={8} borderRadius={4} backgroundColor={colors.success} />
+              <Text fontSize={13} color={colors.muted}>Wordie · luôn sẵn sàng giải đáp</Text>
+            </XStack>
           </YStack>
+          <Pressable onPress={() => router.push('/lookup' as never)} hitSlop={8}>
+            <XStack alignItems="center" gap={4} backgroundColor="#EFEBFF" paddingHorizontal={12} paddingVertical={8} borderRadius={16}>
+              <Ionicons name="search" size={16} color={colors.primary} />
+              <Text fontSize={13} fontWeight="700" color={colors.primary}>Tra từ</Text>
+            </XStack>
+          </Pressable>
           {msgs.length > 1 ? (
             <Pressable onPress={confirmClear} hitSlop={10}>
-              <Text color={colors.danger} fontWeight="700">🗑 Xóa</Text>
+              <Ionicons name="trash-outline" size={22} color={colors.danger} />
             </Pressable>
           ) : null}
         </XStack>
@@ -92,18 +120,36 @@ export default function Chat() {
           ref={listRef}
           data={msgs}
           keyExtractor={(m) => String(m.id)}
-          contentContainerStyle={{ padding: 16, gap: 10 }}
+          contentContainerStyle={{ padding: 16, gap: 12 }}
           onContentSizeChange={() => listRef.current?.scrollToEnd({ animated: true })}
           ListFooterComponent={
-            chat.isPending ? <Text color={colors.muted} marginTop={4}>Wordie đang trả lời...</Text> : null
+            chat.isPending ? (
+              <XStack alignItems="flex-end" gap={8} marginTop={4}>
+                <AiBadge />
+                <XStack alignItems="center" gap={8} backgroundColor="#fff" borderWidth={1} borderColor={colors.border}
+                  borderRadius={18} borderBottomLeftRadius={4} paddingHorizontal={14} paddingVertical={10}>
+                  <ActivityIndicator size="small" color={colors.primary} />
+                  <Text color={colors.muted}>Wordie đang soạn câu trả lời...</Text>
+                </XStack>
+              </XStack>
+            ) : null
           }
           renderItem={({ item }) => {
             const mine = item.role === 'user';
             return (
-              <XStack justifyContent={mine ? 'flex-end' : 'flex-start'}>
-                <YStack maxWidth="85%" padding={12} borderRadius={16}
-                  backgroundColor={mine ? colors.primary : colors.card}
-                  borderWidth={mine ? 0 : 1} borderColor={colors.border}>
+              <XStack justifyContent={mine ? 'flex-end' : 'flex-start'} alignItems="flex-end" gap={8}>
+                {!mine ? <AiBadge /> : null}
+                <YStack
+                  maxWidth="80%"
+                  paddingHorizontal={14}
+                  paddingVertical={10}
+                  borderRadius={18}
+                  borderBottomRightRadius={mine ? 4 : 18}
+                  borderBottomLeftRadius={mine ? 18 : 4}
+                  backgroundColor={mine ? colors.primary : '#fff'}
+                  borderWidth={mine ? 0 : 1}
+                  borderColor={colors.border}
+                >
                   <RichText text={item.text} color={mine ? '#fff' : colors.text} />
                 </YStack>
               </XStack>
@@ -112,19 +158,23 @@ export default function Chat() {
         />
 
         {msgs.length <= 1 ? (
-          <XStack gap={8} flexWrap="wrap" paddingHorizontal={16} paddingBottom={8}>
+          <YStack gap={8} paddingHorizontal={16} paddingBottom={10}>
+            <Text fontSize={12} fontWeight="700" color={colors.muted}>GỢI Ý CHO BẠN</Text>
             {SUGGEST.map((s) => (
-              <Pressable key={s} onPress={() => send(s)}>
-                <YStack paddingHorizontal={12} paddingVertical={8} borderRadius={16} backgroundColor={colors.card}
-                  borderWidth={1} borderColor={colors.border}>
-                  <Text fontSize={13} color={colors.primary}>{s}</Text>
-                </YStack>
+              <Pressable key={s.text} onPress={() => send(s.text)}>
+                <XStack alignItems="center" gap={10} paddingHorizontal={14} paddingVertical={12} borderRadius={16}
+                  backgroundColor="#fff" borderWidth={1} borderColor={colors.border}>
+                  <Ionicons name={s.icon} size={20} color={colors.primary} />
+                  <Text flex={1} fontSize={14} color={colors.text}>{s.text}</Text>
+                  <Ionicons name="chevron-forward" size={16} color={colors.muted} />
+                </XStack>
               </Pressable>
             ))}
-          </XStack>
+          </YStack>
         ) : null}
 
-        <XStack padding={12} gap={8} alignItems="center" borderTopWidth={1} borderTopColor={colors.border} backgroundColor="#fff">
+        <XStack paddingHorizontal={12} paddingVertical={10} gap={10} alignItems="flex-end"
+          borderTopWidth={1} borderTopColor={colors.border} backgroundColor="#fff">
           <TextInput
             value={input}
             onChangeText={setInput}
@@ -132,18 +182,18 @@ export default function Chat() {
             placeholderTextColor={colors.muted}
             multiline
             style={{
-              flex: 1, maxHeight: 100, minHeight: 44, borderRadius: 22, paddingHorizontal: 16,
+              flex: 1, maxHeight: 110, minHeight: 46, borderRadius: 23, paddingHorizontal: 18,
               paddingTop: 12, paddingBottom: 12, backgroundColor: colors.bg, color: colors.text, fontSize: 16,
             }}
           />
-          <Pressable onPress={() => send()} disabled={chat.isPending || !input.trim()}>
-            <YStack width={44} height={44} borderRadius={22} alignItems="center" justifyContent="center"
-              backgroundColor={chat.isPending || !input.trim() ? colors.muted : colors.primary}>
-              <Text color="#fff" fontSize={18}>➤</Text>
+          <Pressable onPress={() => send()} disabled={!canSend}>
+            <YStack width={46} height={46} borderRadius={23} alignItems="center" justifyContent="center"
+              backgroundColor={canSend ? colors.primary : colors.muted}>
+              <Ionicons name="arrow-up" size={22} color="#fff" />
             </YStack>
           </Pressable>
         </XStack>
-      </KeyboardAvoidingView>
+      </YStack>
     </Screen>
   );
 }

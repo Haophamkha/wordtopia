@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import * as Speech from 'expo-speech';
+import { speak } from '../../utils/speak';
 import { Text, YStack } from 'tamagui';
 import { colors } from '../../theme/colors';
 import type { Word } from '../../types/word';
@@ -27,7 +27,7 @@ export function FlipCard({ word, flipped, onFlip }: { word: Word; flipped: boole
           <Text fontSize={34} fontWeight="800" color={colors.primary} textAlign="center">{word.term}</Text>
           {word.phonetic ? <Text fontSize={16} color={colors.muted}>{word.phonetic}</Text> : null}
           {word.partOfSpeech ? <Text fontSize={13} color={colors.muted}>{word.partOfSpeech}</Text> : null}
-          <Pressable onPress={() => Speech.speak(word.term, { language: 'en-US' })} hitSlop={12}>
+          <Pressable onPress={() => speak(word.term)} hitSlop={12}>
             <Text fontSize={30}>🔊</Text>
           </Pressable>
           <Text fontSize={12} color={colors.muted} marginTop={10}>Chạm để lật thẻ</Text>

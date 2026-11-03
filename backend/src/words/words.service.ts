@@ -67,6 +67,6 @@ export class WordsService {
   private async assertOwner(userId: number, id: number) {
     const word = await this.prisma.word.findUnique({ where: { id }, include: { deck: true } });
     if (!word) throw new NotFoundException('Không tìm thấy từ');
-    if (word.deck.ownerId !== userId) throw new ForbiddenException('Bạn không có quyền sửa từ này');
+    if (!word.deck || word.deck.ownerId !== userId) throw new ForbiddenException('Bạn không có quyền sửa từ này');
   }
 }

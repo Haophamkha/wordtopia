@@ -44,13 +44,16 @@ export class AuthService {
       dailyGoal: user.dailyGoal,
       streak: user.streak,
       longestStreak: user.longestStreak,
+      level: user.level,
+      onboarded: user.onboarded,
+      goalType: user.goalType,
     };
   }
 
-  private buildResponse(user: { id: number; email: string; name: string }) {
+  private buildResponse(user: { id: number; email: string; name: string; level: string; onboarded: boolean; dailyGoal: number }) {
     return {
       accessToken: this.jwt.sign({ sub: user.id, email: user.email }),
-      user: { id: user.id, email: user.email, name: user.name },
+      user: { id: user.id, email: user.email, name: user.name, level: user.level, onboarded: user.onboarded, dailyGoal: user.dailyGoal },
     };
   }
 }
