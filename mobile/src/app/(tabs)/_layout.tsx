@@ -1,8 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Redirect, Tabs } from 'expo-router';
+import { Redirect, Tabs, router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEffect } from 'react';
 import { useSurveyStore } from '../../store/survey';
+import { initPush, onNotificationTap, registerPush } from '../../lib/push';
 import { useAuthStore } from '../../store/auth';
 import { colors } from '../../theme/colors';
 
@@ -25,6 +26,13 @@ export default function TabsLayout() {
   useEffect(() => {
     if (userId) loadSurvey(userId);
   }, [userId, loadSurvey]);
+
+  useEffect(() => {
+    if (!token) return;
+    initPush();
+    registerPush({ ask: false });
+    return onNotificationTap((screen) => router.push(screen as never));
+  }, [token]);
 
   if (!token) return <Redirect href="/login" />;
   if (!surveyLoaded) return null;

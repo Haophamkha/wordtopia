@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { errorMessage } from '../api/client';
+import { pathApi } from '../api/path';
 import { surveyApi } from '../api/survey';
 import { OptionButton } from '../components/exercises/ui';
 import { PrimaryButton } from '../components/ui/PrimaryButton';
@@ -51,6 +52,7 @@ export default function Survey() {
   const canNext = step === 0 ? purpose !== null : step === 1 ? level !== null : true;
 
   async function skip() {
+    await pathApi.skipPlacement().catch(() => undefined);
     await save(user!.id, null);
     router.replace('/(tabs)/home' as never);
   }
@@ -60,6 +62,7 @@ export default function Survey() {
     setError('');
     try {
       await surveyApi.setDailyGoal(goal);
+      await pathApi.saveSurvey({ purpose: purpose ?? '', selfLevel: level ?? '' }).catch((e) => console.warn('saveSurvey lỗi', e));
       const { token: t, user: u, setSession } = useAuthStore.getState();
       if (t && u) await setSession(t, { ...u, dailyGoal: goal });
     } catch (e) {

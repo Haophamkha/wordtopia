@@ -2,6 +2,7 @@ export interface LessonSummary {
   id: number;
   order: number;
   title: string;
+  type?: 'VOCAB' | 'GRAMMAR' | 'CHECKPOINT' | 'VIDEO';
   wordCount: number;
   stars: number;
   completed: boolean;

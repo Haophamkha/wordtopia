@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { addDays, vnDate } from '../common/date.util';
+import { addDays, diffDays, vnDate } from '../common/date.util';
+import { accessibleWords } from '../common/word-access';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class StatsService {
         where: { userId, OR: [{ correctCount: { gt: 0 } }, { wrongCount: { gt: 0 } }] },
       }),
       this.prisma.progress.count({ where: { userId, level: { gte: 4 } } }),
-      this.prisma.progress.count({ where: { userId, nextReviewAt: { lte: new Date() } } }),
+      this.prisma.word.count({ where: { ...accessibleWords(userId), progress: { some: { userId, nextReviewAt: { lte: new Date() } } } } }),
       this.prisma.studyLog.findUnique({ where: { userId_date: { userId, date: today } } }),
       this.prisma.quizAttempt.aggregate({
         where: { userId },
@@ -28,11 +29,17 @@ export class StatsService {
 
     // streak đã đứt nếu quá 1 ngày chưa học
     const last = user.lastStudyAt ? vnDate(user.lastStudyAt) : null;
-    const missed = last ? (today.getTime() - last.getTime()) / 86400000 > 1 : true;
+    const gap = last ? diffDays(today, last) : null;
+    const missed = gap === null || gap > 1;
 
     return {
       streak: missed ? 0 : user.streak,
       longestStreak: user.longestStreak,
+      studiedToday: gap === 0,
+      streakAtRisk: gap === 1 && user.streak > 0,
+      streakLost: missed && user.streak > 0 ? { previous: user.streak } : null,
+      xp: user.xp,
+      todayXp: todayLog?.xp ?? 0,
       dailyGoal: user.dailyGoal,
       todayLearned: todayLog?.wordsLearned ?? 0,
       todayReviewed: todayLog?.wordsReview ?? 0,

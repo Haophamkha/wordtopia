@@ -1,11 +1,13 @@
+import { Alert } from '../components/ui/AppDialog';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { OptionButton } from '../components/exercises/ui';
 import { PrimaryButton } from '../components/ui/PrimaryButton';
 import { Screen } from '../components/ui/Screen';
 import { disableReminder, enableReminder, loadReminder } from '../lib/reminder';
+import { preferServerReminder, syncReminderHour } from '../lib/push';
 import { colors } from '../theme/colors';
 
 const HOURS = [
@@ -44,7 +46,9 @@ export default function Reminder() {
         }
       } else {
         await disableReminder(nextHour);
+        syncReminderHour(null);
       }
+      if (nextEnabled) await preferServerReminder(nextHour);
       setEnabled(nextEnabled);
       setHour(nextHour);
     } catch (e) {

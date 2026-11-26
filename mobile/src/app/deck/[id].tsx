@@ -1,6 +1,7 @@
+import { Alert } from '../../components/ui/AppDialog';
 import { router, useLocalSearchParams } from 'expo-router';
 import { speak } from '../../utils/speak';
-import { ActivityIndicator, Alert, FlatList, Pressable } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { errorMessage } from '../../api/client';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';

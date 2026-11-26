@@ -3,6 +3,9 @@ import { ConfigService } from '@nestjs/config';
 import { ChatRole, PartOfSpeech } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { ChatDto, ExplainDto, GenerateDeckDto } from './dto/ai.dto';
+import { MistakeDto } from './dto/mistake.dto';
+import { WritingDto } from './dto/writing.dto';
+import { sanitizeWriting, SYSTEM_WRITING, WRITING_SHAPE, WritingResult } from './writing.util';
 
 interface GeminiResponse {
   candidates?: { content?: { parts?: { text?: string }[] } }[];
@@ -35,6 +38,32 @@ export class AiService {
     private prisma: PrismaService,
     private config: ConfigService,
   ) {}
+
+  private readonly mistakeCache = new Map<string, string>();
+  private readonly usage = new Map<string, number>();
+
+  private limit(userId: number, kind: string, max: number) {
+    const key = `${userId}:${kind}:${new Date().toISOString().slice(0, 10)}`;
+    const n = (this.usage.get(key) ?? 0) + 1;
+    if (n > max) throw new HttpException('Bạn đã dùng hết lượt AI hôm nay, mai quay lại nhé', 429);
+    this.usage.set(key, n);
+    if (this.usage.size > 5000) this.usage.clear();
+  }
+
+  async explainMistake(userId: number, dto: MistakeDto) {
+    const key = `${dto.question}|${dto.answer}|${dto.picked ?? ''}`;
+    const hit = this.mistakeCache.get(key);
+    if (hit) return { explanation: hit };
+    this.limit(userId, 'mistake', 30);
+    const explanation = await this.call({
+      systemInstruction: { parts: [{ text: 'You are an English tutor for Vietnamese learners. In Vietnamese, under 60 words, explain briefly why the learner is wrong and why the correct answer is right. No markdown.' }] },
+      contents: [{ role: 'user', parts: [{ text: `Question: ${dto.question}\nCorrect answer: ${dto.answer}\nLearner chose: ${dto.picked || '(no answer)'}` }] }],
+      generationConfig: { temperature: 0.3 },
+    });
+    if (this.mistakeCache.size > 500) this.mistakeCache.clear();
+    this.mistakeCache.set(key, explanation);
+    return { explanation };
+  }
 
   private async call(body: object): Promise<string> {
     const key = this.config.get<string>('GEMINI_API_KEY');
@@ -83,11 +112,15 @@ export class AiService {
 
   // Giải nghĩa 1 từ (dùng khi thêm từ mới: tự điền nghĩa, phiên âm, ví dụ)
   async explain(dto: ExplainDto) {
-    const w = await this.json<AiWord>(
+    const w = await this.json<AiWord & { similar?: { word?: string; diffVi?: string }[] }>(
       SYSTEM_DICT,
-      `Explain the English word or phrase "${dto.term}". Return JSON: ${WORD_SHAPE}`,
+      `Explain the English word or phrase "${dto.term}". Return JSON: ${WORD_SHAPE.slice(0, -1)}, "similar": [{"word": "a near-synonym or easily confused English word", "diffVi": "one short Vietnamese sentence on how it differs from the main word"}]}. Give 2-3 items in similar, or an empty array if none apply.`,
     );
-    return { ...w, term: w.term || dto.term, partOfSpeech: this.pos(w.partOfSpeech) };
+    const similar = (Array.isArray(w.similar) ? w.similar : [])
+      .filter((s) => s && typeof s.word === "string" && s.word.trim() && typeof s.diffVi === "string" && s.diffVi.trim())
+      .slice(0, 3)
+      .map((s) => ({ word: s.word!.trim(), diffVi: s.diffVi!.trim() }));
+    return { ...w, similar, term: w.term || dto.term, partOfSpeech: this.pos(w.partOfSpeech) };
   }
 
   // Tạo cả bộ từ theo chủ đề và lưu cho user
@@ -143,8 +176,23 @@ export class AiService {
     const history = past.reverse();
     while (history.length > 0 && history[0].role !== ChatRole.USER) history.shift();
 
+    this.limit(userId, 'chat', 100);
+    const [me, weak] = await Promise.all([
+      this.prisma.user.findUnique({ where: { id: userId }, select: { level: true } }),
+      this.prisma.progress.findMany({
+        where: { userId, wrongCount: { gt: 0 } },
+        orderBy: { lastReviewedAt: 'desc' },
+        take: 5,
+        include: { word: { select: { term: true } } },
+      }),
+    ]);
+    const system =
+      SYSTEM_TUTOR +
+      ` Learner level: ${me?.level ?? 'BEGINNER'}.` +
+      (weak.length ? ` Words they recently got wrong: ${weak.map((p) => p.word.term).join(', ')}. Prefer them in examples.` : '');
+
     const reply = await this.call({
-      systemInstruction: { parts: [{ text: SYSTEM_TUTOR }] },
+      systemInstruction: { parts: [{ text: system }] },
       contents: [
         ...history.map((m) => ({
           role: m.role === ChatRole.USER ? 'user' : 'model',
@@ -162,6 +210,27 @@ export class AiService {
       ],
     });
     return { reply };
+  }
+
+  private readonly writingCache = new Map<string, WritingResult>();
+
+  // Sửa câu viết: AI chỉ chấm và gợi ý, không ghi gì vào dữ liệu học của người dùng.
+  async correctWriting(userId: number, dto: WritingDto): Promise<WritingResult> {
+    const text = dto.text.trim().replace(/\s+/g, ' ');
+    const key = text.toLowerCase();
+    const hit = this.writingCache.get(key);
+    if (hit) return hit;
+    this.limit(userId, 'writing', 20);
+
+    const me = await this.prisma.user.findUnique({ where: { id: userId }, select: { level: true } });
+    const raw = await this.json<unknown>(
+      SYSTEM_WRITING + ` Learner level: ${me?.level ?? 'BEGINNER'}.`,
+      `Check the learner text between the <text> tags and return JSON: ${WRITING_SHAPE}.\n<text>${text}</text>`,
+    );
+    const result = sanitizeWriting(raw, text);
+    if (this.writingCache.size > 300) this.writingCache.clear();
+    this.writingCache.set(key, result);
+    return result;
   }
 
   async history(userId: number) {

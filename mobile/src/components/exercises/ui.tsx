@@ -1,8 +1,11 @@
 import * as Haptics from 'expo-haptics';
+import { aiApi } from '../../api/ai';
+import { errorMessage } from '../../api/client';
 import { playFeedback } from '../../lib/sfx';
+import { comboLabel, nextFeedback } from '../../lib/praise';
 import * as Speech from 'expo-speech';
-import { useEffect } from 'react';
-import { Pressable } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Animated, Pressable } from 'react-native';
 import { Text, YStack } from 'tamagui';
 import { colors } from '../../theme/colors';
 import { PrimaryButton } from '../ui/PrimaryButton';
@@ -59,17 +62,45 @@ export function SpeakButton({ text }: { text: string }) {
   );
 }
 
-export function FeedbackBar({ correct, answer, onNext }: { correct: boolean; answer: string; onNext: () => void }) {
+export function FeedbackBar({ correct, answer, onNext, question, picked, explanation }: { correct: boolean; answer: string; onNext: () => void; question?: string; picked?: string; explanation?: string | null }) {
+  const [fb] = useState(() => nextFeedback(correct));
+  const [why, setWhy] = useState('');
+  const [whyLoading, setWhyLoading] = useState(false);
+  async function askWhy() {
+    if (!question || whyLoading) return;
+    setWhyLoading(true);
+    try {
+      const r = await aiApi.explainMistake({ question, answer, picked });
+      setWhy(r.explanation);
+    } catch (e) {
+      setWhy(errorMessage(e));
+    } finally {
+      setWhyLoading(false);
+    }
+  }
+  const pop = useRef(new Animated.Value(0.8)).current;
   useEffect(() => {
     Haptics.notificationAsync(correct ? Haptics.NotificationFeedbackType.Success : Haptics.NotificationFeedbackType.Error).catch(() => {});
     playFeedback(correct);
+    Animated.spring(pop, { toValue: 1, friction: 4, tension: 120, useNativeDriver: true }).start();
   }, []);
+  const combo = correct ? comboLabel(fb.combo) : null;
   return (
     <YStack backgroundColor={correct ? '#E6F7EF' : '#FDECEC'} borderRadius={16} padding={14} gap={10}>
-      <Text fontWeight="800" fontSize={16} color={correct ? '#1B7F57' : colors.danger}>
-        {correct ? '🎉 Chính xác!' : '❌ Chưa đúng'}
-      </Text>
+      <Animated.View style={{ transform: [{ scale: pop }], alignSelf: 'flex-start' }}>
+        <Text fontWeight="800" fontSize={16} color={correct ? '#1B7F57' : colors.danger}>
+          {correct ? `🎉 ${fb.text}` : '❌ Chưa đúng'}
+        </Text>
+      </Animated.View>
+      {combo ? <Text fontWeight="700" fontSize={13} color="#E8590C">{combo}</Text> : null}
       {!correct ? <Text color={colors.text}>Đáp án: {answer}</Text> : null}
+      {!correct && explanation ? <Text color={colors.muted}>{explanation}</Text> : null}
+      {!correct && question && !why ? (
+        <Pressable onPress={askWhy}>
+          <Text color={colors.primary} fontWeight="700">{whyLoading ? 'Đang hỏi Wordie...' : '🤔 Vì sao sai?'}</Text>
+        </Pressable>
+      ) : null}
+      {why ? <Text color={colors.text}>{why}</Text> : null}
       <PrimaryButton title="Tiếp tục" variant={correct ? 'primary' : 'danger'} onPress={onNext} />
     </YStack>
   );

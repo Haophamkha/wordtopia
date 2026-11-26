@@ -3,6 +3,8 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { AiService } from './ai.service';
 import { ChatDto, ExplainDto, GenerateDeckDto } from './dto/ai.dto';
+import { MistakeDto } from './dto/mistake.dto';
+import { WritingDto } from './dto/writing.dto';
 
 type U = { userId: number };
 
@@ -19,6 +21,16 @@ export class AiController {
   @Post('generate-deck')
   generateDeck(@CurrentUser() u: U, @Body() dto: GenerateDeckDto) {
     return this.ai.generateDeck(u.userId, dto);
+  }
+
+  @Post('explain-mistake')
+  explainMistake(@CurrentUser() u: U, @Body() dto: MistakeDto) {
+    return this.ai.explainMistake(u.userId, dto);
+  }
+
+  @Post('correct-writing')
+  correctWriting(@CurrentUser() u: U, @Body() dto: WritingDto) {
+    return this.ai.correctWriting(u.userId, dto);
   }
 
   @Post('chat')

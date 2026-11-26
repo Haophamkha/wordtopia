@@ -53,7 +53,7 @@ export class WordsService {
     if (!q || !q.trim()) return [];
     return this.prisma.word.findMany({
       where: {
-        deck: { OR: [{ isPublic: true }, { ownerId: userId }] },
+        AND: [{ OR: [{ deck: { OR: [{ isPublic: true }, { ownerId: userId }] } }, { lessonId: { not: null } }] }],
         OR: [
           { term: { contains: q, mode: 'insensitive' } },
           { meaning: { contains: q, mode: 'insensitive' } },

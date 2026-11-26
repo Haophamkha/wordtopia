@@ -2,7 +2,8 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { Difficulty } from '@prisma/client';
 import { shuffle } from '../common/array.util';
 import { PrismaService } from '../prisma/prisma.service';
-import { StudyService } from '../study/study.service';
+import { StudyService, XP } from '../study/study.service';
+import { BadgesService } from '../badges/badges.service';
 import { CompleteLessonDto, PlacementSubmitDto } from './dto/path.dto';
 
 const RANK: Record<Difficulty, number> = { BEGINNER: 0, INTERMEDIATE: 1, ADVANCED: 2 };
@@ -21,6 +22,7 @@ export class PathService {
   constructor(
     private prisma: PrismaService,
     private study: StudyService,
+    private badges: BadgesService,
   ) {}
 
   private async sequence() {
@@ -29,6 +31,7 @@ export class PathService {
         id: true,
         order: true,
         title: true,
+        type: true,
         unit: { select: { id: true, level: true, order: true, title: true, titleVi: true, emoji: true } },
         _count: { select: { words: true } },
       },
@@ -72,6 +75,7 @@ export class PathService {
         id: l.id,
         order: l.order,
         title: l.title,
+        type: l.type,
         wordCount: l._count.words,
         stars: p?.stars ?? 0,
         completed,
@@ -105,7 +109,46 @@ export class PathService {
       take: 400,
     });
 
+    let exercises: any[];
+    if (lesson.type === 'GRAMMAR' || lesson.type === 'VIDEO') {
+      const rows = await this.prisma.exercise.findMany({ where: { lessonId }, orderBy: { order: 'asc' } });
+      exercises = rows.map((r) => ({
+        id: 'g' + r.id,
+        type: r.type,
+        wordId: r.type === 'video' && rows.length > 1 ? 0 : -r.id,
+        explanationVi: r.explanationVi,
+        mediaUrl: r.mediaUrl,
+        ...(r.payload as object),
+      }));
+    } else if (lesson.type === 'CHECKPOINT') {
+      const unitWords = await this.prisma.word.findMany({
+        where: { lesson: { unitId: lesson.unitId } },
+        select: { id: true, term: true, meaning: true, phonetic: true },
+      });
+      const all = [...new Map([...unitWords, ...pool].map((x) => [x.meaning, x])).values()];
+      exercises = shuffle(unitWords)
+        .slice(0, 10)
+        .map((w) => {
+          const others = shuffle(all.filter((x) => x.id !== w.id && x.meaning !== w.meaning))
+            .slice(0, 3)
+            .map((x) => x.meaning);
+          return {
+            id: 'c' + w.id,
+            type: 'choose_meaning',
+            wordId: w.id,
+            term: w.term,
+            phonetic: w.phonetic,
+            options: shuffle([w.meaning, ...others]),
+            answer: w.meaning,
+          };
+        });
+    } else {
+      exercises = this.buildExercises(lesson.words, pool);
+    }
+
     return {
+      type: lesson.type,
+      noteMd: lesson.noteMd,
       id: lesson.id,
       title: lesson.title,
       unit: {
@@ -115,7 +158,7 @@ export class PathService {
         titleVi: lesson.unit.titleVi,
         emoji: lesson.unit.emoji,
       },
-      words: lesson.words.map((w) => ({
+      words: (lesson.type === 'VOCAB' ? lesson.words : []).map((w) => ({
         id: w.id,
         term: w.term,
         meaning: w.meaning,
@@ -125,7 +168,7 @@ export class PathService {
         exampleMeaning: w.exampleMeaning,
         synonym: w.synonym,
       })),
-      exercises: this.buildExercises(lesson.words, pool),
+      exercises,
     };
   }
 
@@ -240,7 +283,7 @@ export class PathService {
 
   // ---------- nộp kết quả bài ----------
   async complete(userId: number, lessonId: number, dto: CompleteLessonDto) {
-    const lesson = await this.prisma.lesson.findUnique({ where: { id: lessonId }, select: { id: true } });
+    const lesson = await this.prisma.lesson.findUnique({ where: { id: lessonId }, select: { id: true, type: true, unitId: true } });
     if (!lesson) throw new NotFoundException('Không tìm thấy bài học');
     const total = dto.answers.length;
     if (total === 0) throw new BadRequestException('Chưa có câu trả lời');
@@ -249,20 +292,23 @@ export class PathService {
     const score = Math.round((correct / total) * 100);
     const stars = score >= 90 ? 3 : score >= 70 ? 2 : score >= 50 ? 1 : 0;
 
+    const before = await this.study.today(userId);
+
     const perWord = new Map<number, boolean>();
     for (const a of dto.answers) perWord.set(a.wordId, (perWord.get(a.wordId) ?? true) && a.correct);
     const valid = await this.prisma.word.findMany({
-      where: { lessonId, id: { in: [...perWord.keys()] } },
+      where: { ...(lesson.type === 'CHECKPOINT' ? { lesson: { unitId: lesson.unitId } } : { lessonId }), id: { in: [...perWord.keys()] } },
       select: { id: true },
     });
     const ok = new Set(valid.map((w) => w.id));
+    if (lesson.type === 'VIDEO' || lesson.type === 'GRAMMAR') await this.study.markStudied(userId);
     for (const [wordId, right] of perWord) {
-      if (ok.has(wordId)) await this.study.applyReview(userId, wordId, right);
+      if (ok.has(wordId)) await this.study.applyReview(userId, wordId, right, 0);
     }
 
     const key = { userId_lessonId: { userId, lessonId } };
     const prev = await this.prisma.lessonProgress.findUnique({ where: key });
-    const passed = stars >= 1;
+    const passed = lesson.type === 'CHECKPOINT' ? score >= 70 : stars >= 1;
     const bestStars = Math.max(prev?.stars ?? 0, stars);
     await this.prisma.lessonProgress.upsert({
       where: key,
@@ -275,6 +321,20 @@ export class PathService {
       },
     });
 
+    // XP: điểm bài + thưởng khi vừa đạt mục tiêu ngày
+    const after = await this.study.today(userId);
+    let xpGained = passed ? XP.LESSON_BASE + XP.LESSON_PER_STAR * stars : 0;
+    const dailyGoalReached = before.wordsToday < before.dailyGoal && after.wordsToday >= after.dailyGoal;
+    if (dailyGoalReached) xpGained += XP.DAILY_GOAL;
+    await this.study.addXp(userId, xpGained);
+    const newBadges = await this.badges.evaluate(userId);
+    await this.study.notifyProgress(userId, {
+      streakIncreased: !before.studiedToday && after.studiedToday,
+      streak: after.streak,
+      dailyGoalReached,
+      dailyGoal: after.dailyGoal,
+    });
+
     const seq = await this.sequence();
     const i = seq.findIndex((l) => l.id === lessonId);
     return {
@@ -285,10 +345,20 @@ export class PathService {
       total,
       passed,
       nextLessonId: seq[i + 1]?.id ?? null,
+      newBadges,
+      xpGained,
+      totalXp: after.xp + xpGained,
+      streak: after.streak,
+      streakIncreased: !before.studiedToday && after.studiedToday,
+      dailyGoalReached,
     };
   }
-
   // ---------- bài test đầu vào ----------
+  async skipPlacement(userId: number) {
+    await this.prisma.user.update({ where: { id: userId }, data: { onboarded: true } });
+    return { ok: true };
+  }
+
   async placement() {
     const get = async (level: Difficulty, n: number) => {
       const ws = await this.prisma.word.findMany({

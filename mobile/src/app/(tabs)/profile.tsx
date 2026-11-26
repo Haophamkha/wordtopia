@@ -2,10 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import { Alert, Pressable, ScrollView } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { StatsSection } from '../../components/StatsSection';
 import { Avatar } from '../../components/ui/Avatar';
+import { dialog, confirmLogout } from '../../components/ui/AppDialog';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Screen } from '../../components/ui/Screen';
 import { useAuthStore } from '../../store/auth';
@@ -59,7 +60,13 @@ export default function Profile() {
   const avatar = (user as { avatar?: string | null } | null)?.avatar ?? null;
 
   const soon = (title: string) => () =>
-    Alert.alert(title, 'Tính năng này sẽ có ở bản cập nhật sau.');
+    dialog.alert(title, 'Tính năng này sẽ có ở bản cập nhật sau.', { icon: 'time-outline' });
+
+  const onLogout = () =>
+    confirmLogout(async () => {
+      qc.clear();
+      await logout();
+    });
 
   return (
     <Screen>
@@ -77,7 +84,10 @@ export default function Profile() {
 
           <Group title="TÀI KHOẢN">
             <Row icon="person-outline" tint="#6C5CE7" title="Thông tin cá nhân" onPress={() => router.push('/personal-info' as never)} />
-            <Row icon="star-outline" tint="#F5A623" title="Từ yêu thích" onPress={() => router.push('/favorites' as never)} last />
+            <Row icon="star-outline" tint="#F5A623" title="Từ yêu thích" onPress={() => router.push('/favorites' as never)} />
+            <Row icon="people-outline" tint="#2EB67D" title="Bạn bè" onPress={() => router.push('/friends' as never)} />
+            <Row icon="medal-outline" tint="#D9503F" title="Huy hiệu" onPress={() => router.push('/badges' as never)} />
+            <Row icon="ribbon-outline" tint="#E8590C" title="Làm lại bài test trình độ" onPress={() => router.push('/placement' as never)} last />
           </Group>
 
           <Group title="ỨNG DỤNG">
@@ -90,21 +100,9 @@ export default function Profile() {
           </Group>
 
           <YStack gap={10}>
-            <Text fontSize={12} fontWeight="800" color={colors.muted} letterSpacing={0.6} paddingLeft={4}>THỐNG KÊ HỌC TẬP</Text>
-            <StatsSection />
+            <Text fontSize={12} fontWeight="800" color={colors.muted} letterSpacing={0.6} paddingLeft={4}>ĐĂNG XUẤT</Text>
+            <PrimaryButton title="Đăng xuất" variant="danger" onPress={onLogout} />
           </YStack>
-
-          <PrimaryButton
-            icon="log-out-outline"
-            title="Đăng xuất"
-            variant="danger"
-            onPress={() =>
-              Alert.alert('Đăng xuất?', 'Bạn có chắc muốn đăng xuất khỏi tài khoản?', [
-                { text: 'Hủy', style: 'cancel' },
-                { text: 'Đăng xuất', style: 'destructive', onPress: async () => { qc.clear(); await logout(); } },
-              ])
-            }
-          />
         </YStack>
       </ScrollView>
     </Screen>

@@ -23,4 +23,9 @@ export interface Overview {
   dueToday: number;
   quizCount: number;
   avgScore: number;
+  xp?: number;
+  todayXp?: number;
+  studiedToday?: boolean;
+  streakAtRisk?: boolean;
+  streakLost?: { previous: number } | null;
 }

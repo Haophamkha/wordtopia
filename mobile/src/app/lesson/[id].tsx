@@ -1,19 +1,32 @@
+import { Alert } from '../../components/ui/AppDialog';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useRef, useState } from 'react';
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, Pressable, ScrollView } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { errorMessage } from '../../api/client';
 import { pathApi } from '../../api/path';
 import { ExerciseView, type Result } from '../../components/exercises/ExerciseView';
 import { SpeakButton } from '../../components/exercises/ui';
+import { VideoLesson } from '../../components/exercises/VideoLesson';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { RichText } from '../../components/ui/RichText';
 import { Screen } from '../../components/ui/Screen';
+import { StreakCelebration } from '../../components/ui/StreakCelebration';
+import { resetCombo } from '../../lib/praise';
 import { colors } from '../../theme/colors';
 import type { CompleteResult } from '../../types/lesson';
 
 function goPath() {
   router.replace('/(tabs)/path' as never);
+}
+
+function Chip({ text, bg, fg }: { text: string; bg: string; fg: string }) {
+  return (
+    <YStack backgroundColor={bg} paddingHorizontal={12} paddingVertical={6} borderRadius={14}>
+      <Text fontWeight="800" fontSize={14} color={fg}>{text}</Text>
+    </YStack>
+  );
 }
 
 function LessonPlayer({ lessonId }: { lessonId: number }) {
@@ -32,6 +45,7 @@ function LessonPlayer({ lessonId }: { lessonId: number }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [result, setResult] = useState<CompleteResult | null>(null);
+  const [celebrate, setCelebrate] = useState(false);
   const startedAt = useRef(Date.now());
 
   function confirmExit() {
@@ -41,17 +55,32 @@ function LessonPlayer({ lessonId }: { lessonId: number }) {
     ]);
   }
 
+  async function retry() {
+    await refetch();
+    setResult(null);
+    setStep(0);
+    setOutcome({});
+    setSubmitError('');
+    startedAt.current = Date.now();
+    resetCombo();
+  }
+
   async function finish(merged: Record<number, boolean>) {
     if (!lesson) return;
     setSubmitting(true);
     setSubmitError('');
     try {
-      const answers = lesson.words.map((w) => ({ wordId: w.id, correct: merged[w.id] ?? true }));
+      const ids = lesson.words.length
+        ? lesson.words.map((w) => w.id)
+        : lesson.exercises.map((e) => (e as { wordId?: number }).wordId ?? 0).filter(Boolean);
+      const answers = ids.map((id) => ({ wordId: id, correct: merged[id] ?? true }));
       const durationSec = Math.round((Date.now() - startedAt.current) / 1000);
       const res = await pathApi.complete(lesson.id, answers, durationSec);
       setResult(res ?? {});
+      if (res?.streakIncreased) setCelebrate(true);
       qc.invalidateQueries({ queryKey: ['path'] });
       qc.invalidateQueries({ queryKey: ['stats'] });
+      qc.invalidateQueries({ queryKey: ['notifications'] });
     } catch (e) {
       setSubmitError(errorMessage(e));
     } finally {
@@ -90,19 +119,35 @@ function LessonPlayer({ lessonId }: { lessonId: number }) {
 
   // ----- Kết quả -----
   if (result) {
-    const wrong = lesson.words.filter((w) => outcome[w.id] === false).length;
+    const wrong = result.total != null && result.correct != null ? result.total - result.correct : lesson.words.filter((w) => outcome[w.id] === false).length;
     const stars = result.stars ?? (wrong === 0 ? 3 : wrong <= 1 ? 2 : 1);
     return (
       <Screen edges={['top', 'bottom']}>
         <ScrollView contentContainerStyle={{ padding: 20, gap: 16 }}>
           <YStack alignItems="center" gap={8} marginTop={20}>
             <Text fontSize={64}>{wrong === 0 ? '🎉' : '👏'}</Text>
-            <Text fontSize={26} fontWeight="800" color={colors.text}>Hoàn thành bài học!</Text>
+            <Text fontSize={26} fontWeight="800" color={colors.text}>
+              {lesson.type === 'CHECKPOINT' ? (result.passed ? 'Đã qua chặng! 🎓' : 'Chưa đạt, thử lại nhé') : 'Hoàn thành bài học!'}
+            </Text>
+            {lesson.type === 'CHECKPOINT' && result.score != null ? (
+              <Text fontWeight="800" color={result.passed ? '#1B7F57' : colors.danger}>
+                Điểm {result.score}% (cần từ 70%)
+              </Text>
+            ) : null}
             <Text fontSize={36}>{'⭐'.repeat(Math.max(0, Math.min(stars, 3)))}</Text>
             <Text color={colors.muted}>
-              Đúng {lesson.words.length - wrong}/{lesson.words.length} từ
+              Đúng {(result.total ?? lesson.words.length) - wrong}/{result.total ?? lesson.words.length} câu
             </Text>
           </YStack>
+
+          <XStack gap={10} justifyContent="center" flexWrap="wrap">
+            {result.xpGained ? <Chip text={`+${result.xpGained} XP`} bg="#FFF4D6" fg="#B7791F" /> : null}
+            {result.streak ? <Chip text={`🔥 ${result.streak} ngày`} bg="#FFE8E0" fg="#D9503F" /> : null}
+            {result.dailyGoalReached ? <Chip text="🎯 Đạt mục tiêu ngày" bg="#E6F7EF" fg="#1B7F57" /> : null}
+            {result.newBadges?.map((b) => (
+              <Chip key={b.key} text={`${b.emoji} Huy hiệu: ${b.title}`} bg="#EFEBFF" fg="#5240D6" />
+            ))}
+          </XStack>
 
           <YStack backgroundColor={colors.card} borderRadius={16} padding={14} gap={10} borderWidth={1} borderColor={colors.border}>
             {lesson.words.map((w) => (
@@ -113,17 +158,20 @@ function LessonPlayer({ lessonId }: { lessonId: number }) {
             ))}
           </YStack>
 
-          {result.nextLessonId ? (
+          {result.nextLessonId && result.passed !== false ? (
             <PrimaryButton title="Bài tiếp theo ▶" onPress={() => router.replace(`/lesson/${result.nextLessonId}` as never)} />
           ) : null}
+          {result.passed === false ? <PrimaryButton title="Làm lại" onPress={retry} /> : null}
           <PrimaryButton title="Về lộ trình" variant="outline" onPress={goPath} />
         </ScrollView>
+
+        <StreakCelebration visible={celebrate} streak={result.streak ?? 1} onClose={() => setCelebrate(false)} />
       </Screen>
     );
   }
 
   // ----- Giới thiệu từ mới -----
-  if (intro) {
+  if (intro && lesson.type !== 'CHECKPOINT' && lesson.type !== 'VIDEO') {
     return (
       <Screen edges={['top', 'bottom']}>
         <ScrollView contentContainerStyle={{ padding: 20, gap: 14 }}>
@@ -134,7 +182,13 @@ function LessonPlayer({ lessonId }: { lessonId: number }) {
             </YStack>
             <Pressable onPress={goPath}><Text fontSize={22} color={colors.muted}>✕</Text></Pressable>
           </XStack>
-          <Text color={colors.muted}>Làm quen {lesson.words.length} từ mới trước khi làm bài tập</Text>
+          {lesson.type === 'GRAMMAR' && lesson.noteMd ? (
+            <YStack backgroundColor={colors.card} borderRadius={16} padding={16} borderWidth={1} borderColor={colors.border}>
+              <RichText text={lesson.noteMd} color={colors.text} />
+            </YStack>
+          ) : (
+            <Text color={colors.muted}>Làm quen {lesson.words.length} từ mới trước khi làm bài tập</Text>
+          )}
 
           {lesson.words.map((w) => (
             <XStack key={w.id} backgroundColor={colors.card} borderRadius={16} padding={14} gap={12} alignItems="center"
@@ -154,6 +208,7 @@ function LessonPlayer({ lessonId }: { lessonId: number }) {
             title="Bắt đầu làm bài"
             onPress={() => {
               startedAt.current = Date.now();
+              resetCombo();
               setIntro(false);
             }}
           />
@@ -190,7 +245,11 @@ function LessonPlayer({ lessonId }: { lessonId: number }) {
               <PrimaryButton title="Gửi lại kết quả" onPress={() => finish(outcome)} />
             </YStack>
           ) : (
-            <ExerciseView key={exercise.id} exercise={exercise} onDone={onDone} />
+            exercise.type === 'video' ? (
+              <VideoLesson key={exercise.id} ex={exercise} onDone={onDone} />
+            ) : (
+              <ExerciseView key={exercise.id} exercise={exercise} onDone={onDone} quiet={lesson.type === 'CHECKPOINT'} />
+            )
           )}
         </ScrollView>
       </KeyboardAvoidingView>

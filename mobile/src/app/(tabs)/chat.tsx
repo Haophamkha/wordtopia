@@ -1,8 +1,9 @@
+import { Alert } from '../../components/ui/AppDialog';
 import { Ionicons } from '@expo/vector-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, FlatList, Pressable, TextInput } from 'react-native';
+import { ActivityIndicator, FlatList, Pressable, TextInput } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { aiApi } from '../../api/ai';
 import { errorMessage } from '../../api/client';
@@ -100,9 +101,15 @@ export default function Chat() {
             <Text fontSize={22} fontWeight="800" color={colors.text}>Gia sư AI</Text>
             <XStack alignItems="center" gap={6}>
               <YStack width={8} height={8} borderRadius={4} backgroundColor={colors.success} />
-              <Text fontSize={13} color={colors.muted}>Wordie · luôn sẵn sàng giải đáp</Text>
+              <Text fontSize={13} color={colors.muted}>Wordie · luôn sẵn sàng</Text>
             </XStack>
           </YStack>
+          <Pressable onPress={() => router.push('/writing' as never)} hitSlop={8}>
+            <XStack alignItems="center" gap={4} backgroundColor="#EFEBFF" paddingHorizontal={12} paddingVertical={8} borderRadius={16}>
+              <Ionicons name="create-outline" size={16} color={colors.primary} />
+              <Text fontSize={13} fontWeight="700" color={colors.primary}>Sửa câu</Text>
+            </XStack>
+          </Pressable>
           <Pressable onPress={() => router.push('/lookup' as never)} hitSlop={8}>
             <XStack alignItems="center" gap={4} backgroundColor="#EFEBFF" paddingHorizontal={12} paddingVertical={8} borderRadius={16}>
               <Ionicons name="search" size={16} color={colors.primary} />

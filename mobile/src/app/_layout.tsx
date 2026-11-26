@@ -1,3 +1,4 @@
+import { DialogHost } from '../components/ui/AppDialog';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -26,6 +27,7 @@ export default function RootLayout() {
         <StatusBar style="dark" />
         <Stack screenOptions={{ headerShown: false }} />
       </QueryClientProvider>
-    </TamaguiProvider>
+    <DialogHost />
+</TamaguiProvider>
   );
 }

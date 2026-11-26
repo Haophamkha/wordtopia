@@ -1,0 +1,238 @@
+[
+  {
+    "level": "BEGINNER",
+    "order": 0,
+    "title": "Video Lessons",
+    "titleVi": "Học qua video",
+    "emoji": "🎬",
+    "lessons": [
+      {
+        "order": 1,
+        "title": "Video 1 - Giới thiệu bản thân",
+        "noteMd": "Nguồn: Wikimedia Commons, File:CSBS Alice Wiegand.ogv. Phụ đề tiếng Anh theo TimedText trên Commons, phụ đề tiếng Việt do nhóm tự dịch.",
+        "mediaUrl": "https://res.cloudinary.com/dxvj61fay/video/upload/v1795177586/CSBS_Alice_Wiegand_jxm460.mp4",
+        "subtitles": [
+          {
+            "start": 0.0,
+            "end": 1.97,
+            "en": "Hi, I'm Alice,",
+            "vi": "Xin chào, tôi là Alice,"
+          },
+          {
+            "start": 2.07,
+            "end": 3.183,
+            "en": "username lyzzy,",
+            "vi": "tên người dùng là lyzzy,"
+          },
+          {
+            "start": 3.283,
+            "end": 6.454,
+            "en": "and I'm running for the Wikimedia Foundation's Board of Trustees.",
+            "vi": "và tôi đang ứng cử vào Hội đồng Quản trị của Quỹ Wikimedia."
+          },
+          {
+            "start": 6.56,
+            "end": 8.93,
+            "en": "We are here at Raketenstation Hombroich.",
+            "vi": "Chúng tôi đang ở Raketenstation Hombroich."
+          },
+          {
+            "start": 9.03,
+            "end": 10.314,
+            "en": "This is a former NATO base,",
+            "vi": "Đây từng là một căn cứ của NATO,"
+          },
+          {
+            "start": 10.414,
+            "end": 13.903,
+            "en": "which nowadays serves a living and working environment",
+            "vi": "ngày nay là nơi sống và làm việc"
+          },
+          {
+            "start": 14.003,
+            "end": 15.189,
+            "en": "for artists and scientists.",
+            "vi": "của các nghệ sĩ và nhà khoa học."
+          },
+          {
+            "start": 16.356,
+            "end": 18.733,
+            "en": "Here grow fine arts and architecture.",
+            "vi": "Ở đây, mỹ thuật và kiến trúc phát triển."
+          },
+          {
+            "start": 19.075,
+            "end": 20.299,
+            "en": "I love this place.",
+            "vi": "Tôi yêu nơi này."
+          },
+          {
+            "start": 20.496,
+            "end": 23.177,
+            "en": "It is wide and open, for everyone who",
+            "vi": "Nơi này rộng và cởi mở, dành cho tất cả những ai"
+          },
+          {
+            "start": 23.277,
+            "end": 26.496,
+            "en": "is looking for new aspects and point of views.",
+            "vi": "đang tìm kiếm những khía cạnh và góc nhìn mới."
+          },
+          {
+            "start": 26.817,
+            "end": 28.182,
+            "en": "It's open for the public.",
+            "vi": "Nơi này mở cửa cho công chúng."
+          },
+          {
+            "start": 28.754,
+            "end": 31.953,
+            "en": "It's a little bit like Wikipedia, isn't it?",
+            "vi": "Nó hơi giống Wikipedia, phải không?"
+          },
+          {
+            "start": 32.561,
+            "end": 36.017,
+            "en": "I've been part of the Wikimedia Universe since 2004",
+            "vi": "Tôi là một phần của thế giới Wikimedia từ năm 2004"
+          },
+          {
+            "start": 36.117,
+            "end": 37.703,
+            "en": "and I am still fascinated.",
+            "vi": "và tôi vẫn còn say mê."
+          },
+          {
+            "start": 38.633,
+            "end": 42.982,
+            "en": "After our first wild years on this vivid platform of knowledge",
+            "vi": "Sau những năm đầu sôi nổi trên nền tảng tri thức sống động này,"
+          },
+          {
+            "start": 43.082,
+            "end": 46.348,
+            "en": "we now have to take care that our projects evolve",
+            "vi": "giờ chúng ta phải lo cho các dự án tiếp tục phát triển"
+          },
+          {
+            "start": 46.448,
+            "end": 47.588,
+            "en": "and that they keep alive.",
+            "vi": "và luôn sống động."
+          },
+          {
+            "start": 48.279,
+            "end": 51.788,
+            "en": "We need to preserve and enhance the content at the same time.",
+            "vi": "Chúng ta cần vừa giữ gìn vừa nâng cao nội dung."
+          },
+          {
+            "start": 51.888,
+            "end": 55.208,
+            "en": "With respect to the contributors and respect to the readers.",
+            "vi": "Với sự tôn trọng người đóng góp và người đọc."
+          },
+          {
+            "start": 56.644,
+            "end": 60.356,
+            "en": "Through our work people can find all the information they need",
+            "vi": "Nhờ công việc của chúng ta, mọi người có thể tìm thấy thông tin họ cần"
+          },
+          {
+            "start": 60.456,
+            "end": 61.84,
+            "en": "to make better decisions.",
+            "vi": "để đưa ra quyết định tốt hơn."
+          },
+          {
+            "start": 62.275,
+            "end": 63.693,
+            "en": "Whenever they want.",
+            "vi": "Bất cứ khi nào họ muốn."
+          },
+          {
+            "start": 63.793,
+            "end": 65.302,
+            "en": "Freely and independently.",
+            "vi": "Một cách tự do và độc lập."
+          },
+          {
+            "start": 66.118,
+            "end": 71.51,
+            "en": "And I will do my best to let this not only be a slogan but become reality.",
+            "vi": "Và tôi sẽ cố hết sức để điều này không chỉ là khẩu hiệu mà trở thành hiện thực."
+          },
+          {
+            "start": 72.159,
+            "end": 75.174,
+            "en": "For you, for me and for everyone else in the world.",
+            "vi": "Vì bạn, vì tôi và vì mọi người trên thế giới."
+          },
+          {
+            "start": 75.502,
+            "end": 76.502,
+            "en": "Thanks.",
+            "vi": "Cảm ơn."
+          }
+        ],
+        "quiz": [
+          {
+            "question": "Where is Alice speaking from?",
+            "options": [
+              "A university library",
+              "A former NATO base",
+              "A hospital",
+              "An airport"
+            ],
+            "answer": "A former NATO base",
+            "explanationVi": "Alice nói: \"This is a former NATO base\" (đây từng là một căn cứ của NATO)."
+          },
+          {
+            "question": "Who is the place a living and working environment for?",
+            "options": [
+              "Artists and scientists",
+              "Soldiers and pilots",
+              "Teachers and students",
+              "Doctors and nurses"
+            ],
+            "answer": "Artists and scientists",
+            "explanationVi": "Alice nói nơi này dành cho \"artists and scientists\" (nghệ sĩ và nhà khoa học)."
+          },
+          {
+            "question": "What does Alice compare the place to?",
+            "options": [
+              "A museum",
+              "A school",
+              "A library",
+              "Wikipedia"
+            ],
+            "answer": "Wikipedia",
+            "explanationVi": "Alice nói: \"It's a little bit like Wikipedia, isn't it?\" (nó hơi giống Wikipedia)."
+          },
+          {
+            "question": "Since when has Alice been part of the Wikimedia universe?",
+            "options": [
+              "2001",
+              "2004",
+              "2012",
+              "2020"
+            ],
+            "answer": "2004",
+            "explanationVi": "Alice nói: \"I've been part of the Wikimedia Universe since 2004\" (từ năm 2004)."
+          },
+          {
+            "question": "\"I am still fascinated\" means she is still...",
+            "options": [
+              "very tired",
+              "very angry",
+              "very interested",
+              "very afraid"
+            ],
+            "answer": "very interested",
+            "explanationVi": "\"Fascinated\" nghĩa là bị cuốn hút, rất hứng thú (rất quan tâm)."
+          }
+        ]
+      }
+    ]
+  }
+]

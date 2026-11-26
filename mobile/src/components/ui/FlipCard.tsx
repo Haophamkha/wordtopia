@@ -53,7 +53,7 @@ export function FlipCard({ word, flipped, onFlip }: { word: Word; flipped: boole
 
 const styles = StyleSheet.create({
   face: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     borderRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',

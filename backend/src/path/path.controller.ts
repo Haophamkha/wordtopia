@@ -26,6 +26,11 @@ export class PathController {
     return this.path.submitPlacement(u.userId, dto);
   }
 
+  @Post('placement/skip')
+  skipPlacement(@CurrentUser() u: U) {
+    return this.path.skipPlacement(u.userId);
+  }
+
   @Get('lessons/:id')
   lesson(@Param('id', ParseIntPipe) id: number) {
     return this.path.getLesson(id);

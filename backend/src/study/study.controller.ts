@@ -25,4 +25,9 @@ export class StudyController {
   review(@CurrentUser() u: U, @Body() dto: ReviewDto) {
     return this.study.applyReview(u.userId, dto.wordId, dto.correct);
   }
+
+  @Post('streak-lost/ack')
+  ackStreakLost(@CurrentUser() u: U) {
+    return this.study.ackStreakLost(u.userId);
+  }
 }

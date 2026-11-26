@@ -1,7 +1,8 @@
+import { Alert } from '../components/ui/AppDialog';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, Alert, Pressable, ScrollView } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView } from 'react-native';
 import { Text, XStack, YStack } from 'tamagui';
 import { api, errorMessage } from '../api/client';
 import { SpeakButton } from '../components/exercises/ui';
@@ -17,6 +18,7 @@ interface Explained {
   meaning: string;
   example?: string;
   exampleMeaning?: string;
+  similar?: { word: string; diffVi: string }[];
 }
 
 interface MyDeck {
@@ -106,6 +108,18 @@ export default function Lookup() {
               {result.example ? <Text color={colors.text}>{result.example}</Text> : null}
               {result.exampleMeaning ? <Text color={colors.muted}>{result.exampleMeaning}</Text> : null}
             </YStack>
+
+            {result.similar && result.similar.length > 0 ? (
+              <YStack backgroundColor={colors.card} borderRadius={18} padding={18} gap={10} borderWidth={1} borderColor={colors.border}>
+                <Text fontWeight="700" color={colors.text}>Phân biệt từ gần nghĩa</Text>
+                {result.similar.map((s) => (
+                  <YStack key={s.word} gap={2}>
+                    <Text fontWeight="700" color={colors.primary}>{s.word}</Text>
+                    <Text color={colors.muted}>{s.diffVi}</Text>
+                  </YStack>
+                ))}
+              </YStack>
+            ) : null}
 
             <Text fontWeight="700" color={colors.text}>Thêm vào bộ từ của bạn</Text>
             {decks.isLoading ? (

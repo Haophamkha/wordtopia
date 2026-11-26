@@ -49,6 +49,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: async () => {
+    try {
+      const { unregisterPush } = require('../lib/push') as typeof import('../lib/push');
+      await unregisterPush();
+    } catch {}
     set({ token: null, user: null });
     try {
       await SecureStore.deleteItemAsync(KEY);

@@ -6,6 +6,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { ALLOWED_IMAGE_MIME, MAX_AVATAR_BYTES } from '../common/image-validate';
 import { UpdateProfileDto } from './dto/user.dto';
+import { SurveyDto } from './dto/survey.dto';
 import { UsersService } from './users.service';
 
 interface UploadedImage {
@@ -22,6 +23,11 @@ export class UsersController {
   @Patch('me')
   update(@CurrentUser() u: { userId: number }, @Body() dto: UpdateProfileDto) {
     return this.users.updateProfile(u.userId, dto);
+  }
+
+  @Post('me/survey')
+  survey(@CurrentUser() u: { userId: number }, @Body() dto: SurveyDto) {
+    return this.users.saveSurvey(u.userId, dto);
   }
 
   @Post('me/avatar')

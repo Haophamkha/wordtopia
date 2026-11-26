@@ -12,6 +12,12 @@ import { QuizModule } from './quiz/quiz.module';
 import { StatsModule } from './stats/stats.module';
 import { AiModule } from './ai/ai.module';
 import { PathModule } from './path/path.module';
+import { PasswordResetModule } from './password-reset/password-reset.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { LeaderboardModule } from './leaderboard/leaderboard.module';
+import { FriendsModule } from './friends/friends.module';
+import { BadgesModule } from './badges/badges.module';
+import { PushModule } from './push/push.module';
 
 @Module({
   imports: [
@@ -26,6 +32,12 @@ import { PathModule } from './path/path.module';
     StatsModule,
     AiModule,
     PathModule,
+    PasswordResetModule,
+    NotificationsModule,
+    LeaderboardModule,
+    FriendsModule,
+    BadgesModule,
+    PushModule,
   ],
   controllers: [AppController],
   providers: [AppService],

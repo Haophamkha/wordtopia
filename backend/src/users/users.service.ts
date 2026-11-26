@@ -3,6 +3,7 @@ import type { User } from '@prisma/client';
 import { uploadAvatarToCloudinary } from '../common/cloudinary';
 import { MAX_AVATAR_BYTES, detectImageKind } from '../common/image-validate';
 import { PrismaService } from '../prisma/prisma.service';
+import { SurveyDto } from './dto/survey.dto';
 import { UpdateProfileDto } from './dto/user.dto';
 
 @Injectable()
@@ -27,6 +28,14 @@ export class UsersService {
   async updateProfile(userId: number, dto: UpdateProfileDto) {
     const user = await this.prisma.user.update({ where: { id: userId }, data: dto });
     return this.toDto(user);
+  }
+
+  async saveSurvey(userId: number, dto: SurveyDto) {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { goalType: dto.purpose ?? undefined, selfLevel: dto.selfLevel ?? undefined },
+    });
+    return { ok: true };
   }
 
   async uploadAvatar(userId: number, file?: { buffer: Buffer; mimetype: string; size: number }) {

@@ -1,14 +1,18 @@
 import { Link } from 'expo-router';
 import { useState } from 'react';
-import { Text, XStack } from 'tamagui';
+import { Text, View } from 'react-native';
 import { authApi } from '../../api/auth';
 import { errorMessage } from '../../api/client';
-import { AuthShell, ErrorBox, GoogleButton, OrDivider } from '../../components/auth/AuthShell';
-import { Field } from '../../components/ui/Field';
-import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import {
+  AuthButton,
+  AuthField,
+  AuthShell,
+  ErrorBox,
+  GoogleButton,
+  OrDivider,
+} from '../../components/auth/AuthShell';
 import { useGoogleLogin } from '../../hooks/useGoogleLogin';
 import { useAuthStore } from '../../store/auth';
-import { colors } from '../../theme/colors';
 
 export default function Login() {
   const setSession = useAuthStore((s) => s.setSession);
@@ -37,24 +41,46 @@ export default function Login() {
 
   return (
     <AuthShell
-      emoji="🌍"
-      title="Wordtopia"
-      subtitle="Học từ vựng tiếng Anh mỗi ngày"
+      showBack={false}
+      title={'Chào bạn,\nĐăng nhập nhé!'}
       footer={
-        <XStack justifyContent="center" gap={6}>
-          <Text color={colors.muted}>Chưa có tài khoản?</Text>
-          <Link href="/register" style={{ color: colors.primary, fontWeight: '700' }}>Đăng ký</Link>
-        </XStack>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ color: '#fff', fontSize: 14 }}>
+            Chưa có tài khoản?{' '}
+            <Link href="/register" style={{ color: '#FFB4AA', fontWeight: '800' }}>
+              Đăng ký
+            </Link>
+          </Text>
+        </View>
       }
     >
-      <Field label="Email" icon="mail-outline" value={email} onChangeText={setEmail} placeholder="ban@email.com" keyboardType="email-address" />
-      <Field label="Mật khẩu" icon="lock-closed-outline" value={password} onChangeText={setPassword} placeholder="Nhập mật khẩu" secureTextEntry />
+      <AuthField
+        icon="mail-outline"
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email"
+        keyboardType="email-address"
+      />
+      <AuthField
+        icon="lock-closed-outline"
+        value={password}
+        onChangeText={setPassword}
+        placeholder="Mật khẩu"
+        secureTextEntry
+      />
+
+      <View style={{ alignItems: 'flex-end', marginTop: 4 }}>
+        <Link href="/forgot-password" style={{ color: '#FFB4AA', fontWeight: '700', fontSize: 13 }}>
+          Quên mật khẩu?
+        </Link>
+      </View>
 
       <ErrorBox text={error || google.error} />
 
-      <PrimaryButton title="Đăng nhập" onPress={submit} loading={loading} />
-      <OrDivider />
-      <GoogleButton title="Tiếp tục với Google" onPress={google.run} loading={google.loading} />
+      <View style={{ height: 6 }} />
+      <AuthButton title="Đăng nhập" onPress={submit} loading={loading} />
+      <OrDivider label="Hoặc đăng nhập bằng" />
+      <GoogleButton title="Đăng nhập với Google" onPress={google.run} loading={google.loading} />
     </AuthShell>
   );
 }

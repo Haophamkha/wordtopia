@@ -7,6 +7,8 @@ export const pathApi = {
   lesson: (id: number) => api.get<Lesson>(`/path/lessons/${id}`).then((r) => r.data),
   complete: (id: number, answers: { wordId: number; correct: boolean }[], durationSec: number) =>
     api.post<CompleteResult>(`/path/lessons/${id}/complete`, { answers, durationSec }).then((r) => r.data),
+  skipPlacement: () => api.post('/path/placement/skip').then((r) => r.data),
+  saveSurvey: (body: { purpose: string; selfLevel: string }) => api.post('/users/me/survey', body).then((r) => r.data),
   placement: () => api.get<Placement>('/path/placement').then((r) => r.data),
   submitPlacement: (answers: { wordId: number; selected: string }[]) =>
     api.post('/path/placement', { answers }).then((r) => r.data),

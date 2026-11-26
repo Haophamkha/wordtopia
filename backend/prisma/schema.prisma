@@ -40,9 +40,12 @@ model User {
   dailyGoal      Int              @default(10)
   level          Difficulty       @default(BEGINNER)
   goalType       String?
+  selfLevel      String?
   onboarded      Boolean          @default(false)
   streak         Int              @default(0)
   longestStreak  Int              @default(0)
+  xp             Int              @default(0)
+  reminderHour   Int?
   lastStudyAt    DateTime?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
@@ -52,6 +55,13 @@ model User {
   studyLogs      StudyLog[]
   chatMessages   ChatMessage[]
   lessonProgress LessonProgress[]
+  notifications  Notification[]
+  friendCode             String?      @unique
+  hideFromLeaderboard    Boolean      @default(false)
+  sentFriendRequests     Friendship[] @relation("FriendRequester")
+  receivedFriendRequests Friendship[] @relation("FriendAddressee")
+  badges                 UserBadge[]
+  pushTokens     PushToken[]
 }
 
 model Deck {
@@ -86,13 +96,16 @@ model Unit {
 }
 
 model Lesson {
-  id       Int              @id @default(autoincrement())
-  unit     Unit             @relation(fields: [unitId], references: [id], onDelete: Cascade)
-  unitId   Int
-  order    Int
-  title    String
-  words    Word[]
-  progress LessonProgress[]
+  id        Int              @id @default(autoincrement())
+  unit      Unit             @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  unitId    Int
+  order     Int
+  title     String
+  words     Word[]
+  type      LessonType       @default(VOCAB)
+  noteMd    String?
+  exercises Exercise[]
+  progress  LessonProgress[]
 
   @@unique([unitId, order])
 }
@@ -173,6 +186,7 @@ model StudyLog {
   wordsLearned Int      @default(0)
   wordsReview  Int      @default(0)
   minutes      Int      @default(0)
+  xp           Int      @default(0)
 
   @@unique([userId, date])
 }
@@ -186,4 +200,97 @@ model ChatMessage {
   createdAt DateTime @default(now())
 
   @@index([userId, createdAt])
+}
+
+model PasswordReset {
+  id        Int      @id @default(autoincrement())
+  email     String
+  codeHash  String
+  attempts  Int      @default(0)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+enum NotificationType {
+  STREAK_MILESTONE
+  STREAK_LOST
+  DAILY_GOAL_DONE
+  REVIEW_DUE
+  SYSTEM
+}
+
+model Notification {
+  id        Int              @id @default(autoincrement())
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  type      NotificationType
+  title     String
+  body      String
+  data      Json?
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  @@index([userId, createdAt])
+  @@index([userId, readAt])
+}
+
+model PushToken {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  token     String   @unique
+  platform  String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+enum LessonType {
+  VOCAB
+  GRAMMAR
+  CHECKPOINT
+  VIDEO
+}
+
+model Exercise {
+  id            Int     @id @default(autoincrement())
+  lesson        Lesson  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId      Int
+  order         Int
+  type          String
+  payload       Json
+  explanationVi String?
+  mediaUrl      String?
+
+  @@unique([lessonId, order])
+}
+
+enum FriendStatus {
+  PENDING
+  ACCEPTED
+}
+
+model Friendship {
+  id          Int          @id @default(autoincrement())
+  requester   User         @relation("FriendRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  requesterId Int
+  addressee   User         @relation("FriendAddressee", fields: [addresseeId], references: [id], onDelete: Cascade)
+  addresseeId Int
+  status      FriendStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+
+  @@unique([requesterId, addresseeId])
+  @@index([addresseeId])
+}
+
+model UserBadge {
+  id       Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int
+  badgeKey String
+  earnedAt DateTime @default(now())
+
+  @@unique([userId, badgeKey])
 }

@@ -108,7 +108,7 @@ export default function Placement() {
   return (
     <Screen edges={['top', 'bottom']}>
       <XStack padding={20} paddingBottom={8} gap={14} alignItems="center">
-        <Pressable onPress={goPath}><Text fontSize={22} color={colors.muted}>✕</Text></Pressable>
+        <Pressable onPress={() => (router.canGoBack() ? router.back() : goPath())}><Text fontSize={22} color={colors.muted}>✕</Text></Pressable>
         <YStack flex={1} height={10} borderRadius={5} backgroundColor={colors.border} overflow="hidden">
           <YStack height={10} width={`${pct}%`} backgroundColor={colors.primary} borderRadius={5} />
         </YStack>
