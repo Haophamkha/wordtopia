@@ -12,27 +12,62 @@ const MAX_ATTEMPTS = 5;
 @Injectable()
 export class PasswordResetService {
   private readonly logger = new Logger(PasswordResetService.name);
-  private transporter: nodemailer.Transporter | null = null;
 
   constructor(
     private prisma: PrismaService,
     private config: ConfigService,
   ) {}
 
-  private mailer(): nodemailer.Transporter | null {
-    const user = this.config.get<string>('SMTP_USER');
-    const pass = this.config.get<string>('SMTP_PASS');
-    if (!user || !pass) return null;
-    if (!this.transporter) {
-      const port = Number(this.config.get<string>('SMTP_PORT') ?? 465);
-      this.transporter = nodemailer.createTransport({
-        host: this.config.get<string>('SMTP_HOST') ?? 'smtp.gmail.com',
-        port,
-        secure: port === 465,
-        auth: { user, pass },
-      });
-    }
-    return this.transporter;
+  private gmailCreds() {
+    const clientId = this.config.get<string>('GMAIL_CLIENT_ID');
+    const clientSecret = this.config.get<string>('GMAIL_CLIENT_SECRET');
+    const refreshToken = this.config.get<string>('GMAIL_REFRESH_TOKEN');
+    if (!clientId || !clientSecret || !refreshToken) return null;
+    return { clientId, clientSecret, refreshToken };
+  }
+
+  // Render free chặn cổng SMTP, nên gửi qua Gmail API (HTTPS).
+  private async accessToken(c: { clientId: string; clientSecret: string; refreshToken: string }) {
+    const res = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: c.clientId,
+        client_secret: c.clientSecret,
+        refresh_token: c.refreshToken,
+        grant_type: 'refresh_token',
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) throw new Error(`Google token ${res.status}: ${await res.text()}`);
+    const data = (await res.json()) as { access_token: string };
+    return data.access_token;
+  }
+
+  private async sendMail(
+    c: { clientId: string; clientSecret: string; refreshToken: string },
+    to: string,
+    subject: string,
+    text: string,
+    html: string,
+  ) {
+    const builder = nodemailer.createTransport({ streamTransport: true, buffer: true, newline: 'unix' });
+    const info = await builder.sendMail({
+      from: this.config.get<string>('MAIL_FROM') ?? 'Wordtopia',
+      to,
+      subject,
+      text,
+      html,
+    });
+    const raw = (info.message as unknown as Buffer).toString('base64url');
+    const token = await this.accessToken(c);
+    const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ raw }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) throw new Error(`Gmail ${res.status}: ${await res.text()}`);
   }
 
   async request(rawEmail: string) {
@@ -56,29 +91,29 @@ export class PasswordResetService {
       },
     });
 
-    const mailer = this.mailer();
-    if (!mailer) {
+    const creds = this.gmailCreds();
+    if (!creds) {
       if (process.env.NODE_ENV === 'production') {
         throw new ServiceUnavailableException('Chưa cấu hình gửi email');
       }
-      this.logger.warn(`[DEV] Chưa cấu hình SMTP. Mã OTP cho ${email}: ${code}`);
+      this.logger.warn(`[DEV] Chưa cấu hình GMAIL_*. Mã OTP cho ${email}: ${code}`);
       return { ok: true };
     }
 
     try {
-      await mailer.sendMail({
-        from: this.config.get<string>('MAIL_FROM') ?? `Wordtopia <${this.config.get<string>('SMTP_USER')}>`,
-        to: email,
-        subject: 'Mã xác nhận đặt lại mật khẩu Wordtopia',
-        text: `Mã xác nhận của bạn là ${code}. Mã có hiệu lực trong ${TTL_MIN} phút. Nếu bạn không yêu cầu, hãy bỏ qua email này.`,
-        html: `
+      await this.sendMail(
+        creds,
+        email,
+        'Mã xác nhận đặt lại mật khẩu Wordtopia',
+        `Mã xác nhận của bạn là ${code}. Mã có hiệu lực trong ${TTL_MIN} phút. Nếu bạn không yêu cầu, hãy bỏ qua email này.`,
+        `
           <div style="font-family:Arial,sans-serif;max-width:420px;margin:auto;padding:24px;border-radius:16px;background:#F6F5FB">
             <h2 style="color:#5240D6;margin:0 0 8px">Wordtopia</h2>
             <p style="color:#1F1D3A">Mã xác nhận đặt lại mật khẩu của bạn:</p>
             <p style="font-size:34px;font-weight:800;letter-spacing:8px;color:#5240D6;margin:12px 0">${code}</p>
             <p style="color:#8683A3;font-size:13px">Mã có hiệu lực trong ${TTL_MIN} phút. Nếu bạn không yêu cầu, hãy bỏ qua email này.</p>
           </div>`,
-      });
+      );
     } catch (e) {
       this.logger.error(`Gửi mail lỗi: ${e instanceof Error ? e.message : String(e)}`);
       await this.prisma.passwordReset.deleteMany({ where: { email } });
